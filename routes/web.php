@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontstore\HomepageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::name('frontstore.')->group(function () {
+    Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

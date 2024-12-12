@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+aside nav {
+    scrollbar-width: thin; /* Untuk Firefox */
+    scrollbar-color: #a0aec0 #edf2f7;
+}
+
+aside nav::-webkit-scrollbar {
+    width: 3px; /* Lebar scrollbar */
+}
+
+aside nav::-webkit-scrollbar-thumb {
+    background: #a0aec0;
+    border-radius: 2px;
+}
+
+aside nav::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+}
+
+aside nav::-webkit-scrollbar-track {
+    background: #edf2f7;
+}
+
+nav .nav-item{
+    @apply flex items-center gap-2 p-2 rounded hover:rounded-lg hover:p-3 hover:bg-white hover:scale-105;
+    transition: transform 0.5s ease 0.3s, background-color 0.5s ease;
+}
+
+nav .active {
+    @apply bg-white scale-105;
+}
+
+nav .nav-item span{
+    @apply font-semibold;
+}
