@@ -33,7 +33,7 @@
                                                     x-on:click.prevent="
                                                             $dispatch('open-modal', 'form-category');
                                                             $dispatch('set-edit-data', {
-                                                                actionUrl: '{{ route('category.update', $category->id) }}',
+                                                                actionUrl: '{{ route('backoffice.category.update', $category->id) }}',
                                                                 name: '{{ $category->name }}'
                                                             });
                                                         ">
@@ -42,7 +42,7 @@
                                                 <x-button.danger-button x-data=""
                                                     x-on:click.prevent="
                                                             $dispatch('open-modal', 'confirm-delete');
-                                                            $dispatch('set-delete-action', '{{ route('category.destroy', $category->id) }}');
+                                                            $dispatch('set-delete-action', '{{ route('backoffice.category.destroy', $category->id) }}');
                                                         ">
                                                     {{ __('Delete') }}
                                                 </x-button.danger-button>
@@ -67,7 +67,7 @@
 
     <x-modal.modal name="form-category" maxWidth="lg" :show="$errors->isNotEmpty()" focusable>
         <div x-data="{
-            formAction: '{{ route('category.store') }}',
+            formAction: '{{ route('backoffice.category.store') }}',
             categoryName: '',
             isEdit: false,
             setEditData(actionUrl, name) {
@@ -76,7 +76,7 @@
                 this.isEdit = true;
             },
             resetForm() {
-                this.formAction = '{{ route('category.store') }}';
+                this.formAction = '{{ route('backoffice.category.store') }}';
                 this.categoryName = '';
                 this.isEdit = false;
             },

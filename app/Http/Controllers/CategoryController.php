@@ -41,7 +41,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
-        return Redirect::route('category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category created successfully']);
+        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category created successfully']);
     }
 
     /**
@@ -72,7 +72,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name),
         ]);
 
-        return Redirect::route('category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category updated successfully']);
+        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category updated successfully']);
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
     {
         // Check if the category is associated with any product
         if ($category->product()->exists()) {
-            return redirect()->route('category.index')->with([
+            return redirect()->route('backoffice.category.index')->with([
                 'alert-toast' => true,
                 'type' => 'danger',
                 'message' => 'Category cannot be deleted because it is in use by one or more product.'
@@ -90,6 +90,6 @@ class CategoryController extends Controller
         }
 
         $category->delete();
-        return Redirect::route('category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category deleted successfully']);
+        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category deleted successfully']);
     }
 }

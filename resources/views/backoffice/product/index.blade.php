@@ -5,7 +5,7 @@
                 <div class="card-title">
                     <h3 class="text-slate-900">Product</h3>
                     <x-button.success-button x-data=""
-                        x-on:click="window.location.href = '{{ route('product.create') }}'"
+                        x-on:click="window.location.href = '{{ route('backoffice.product.create') }}'"
                         class="ml-auto">{{ __('Add New') }}</x-button.success-button>
                 </div>
                 <div class="card-body">
@@ -50,17 +50,17 @@
                                         <td>
                                             <div class="flex gap-2 justify-center">
                                                 <x-button.info-button x-data=""
-                                                    x-on:click="window.location.href = '{{ route('product.show', $product->id) }}'">
+                                                    x-on:click="window.location.href = '{{ route('backoffice.product.show', $product->id) }}'">
                                                     {{ __('View') }}
                                                 </x-button.info-button>
                                                 <x-button.warning-button x-data=""
-                                                    x-on:click="window.location.href = '{{ route('product.edit', $product->id) }}'">
+                                                    x-on:click="window.location.href = '{{ route('backoffice.product.edit', $product->id) }}'">
                                                     {{ __('Edit') }}
                                                 </x-button.warning-button>
                                                 <x-button.danger-button x-data=""
                                                     x-on:click.prevent="
                                                             $dispatch('open-modal', 'confirm-delete');
-                                                            $dispatch('set-delete-action', '{{ route('product.destroy', $product->id) }}');
+                                                            $dispatch('set-delete-action', '{{ route('backoffice.product.destroy', $product->id) }}');
                                                         ">
                                                     {{ __('Delete') }}
                                                 </x-button.danger-button>

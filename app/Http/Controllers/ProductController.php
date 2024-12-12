@@ -59,7 +59,7 @@ class ProductController extends Controller
             'image' => $image,
         ]);
 
-        return Redirect::route('product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product created successfully']);
+        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product created successfully']);
     }
 
     /**
@@ -114,7 +114,7 @@ class ProductController extends Controller
 
         $product->update($dataUpdated);
 
-        return Redirect::route('product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product updated successfully']);
+        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product updated successfully']);
     }
 
     /**
@@ -123,6 +123,6 @@ class ProductController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
-        return Redirect::route('product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product deleted successfully']);
+        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product deleted successfully']);
     }
 }

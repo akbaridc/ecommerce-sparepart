@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use App\Models\Category;
 
 class AppFrontLayout extends Component
 {
@@ -12,6 +13,7 @@ class AppFrontLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.frontstore.app');
+        $categories = Category::orderBy('name')->get(['name', 'slug']);
+        return view('layouts.frontstore.app', compact('categories'));
     }
 }
