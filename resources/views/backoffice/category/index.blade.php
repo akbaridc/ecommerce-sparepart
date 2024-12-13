@@ -34,7 +34,8 @@
                                                             $dispatch('open-modal', 'form-category');
                                                             $dispatch('set-edit-data', {
                                                                 actionUrl: '{{ route('backoffice.category.update', $category->id) }}',
-                                                                name: '{{ $category->name }}'
+                                                                name: '{{ $category->name }}',
+                                                                slug: '{{ $category->slug }}',
                                                             });
                                                         ">
                                                     {{ __('Edit') }}
@@ -68,22 +69,25 @@
     <x-modal.modal name="form-category" maxWidth="lg" :show="$errors->isNotEmpty()" focusable>
         <div x-data="{
             formAction: '{{ route('backoffice.category.store') }}',
-            categoryName: '',
+            categoryName: '{{ old('name') ?? '' }}',
+            slugName: '{{ old('slug') ?? '' }}',
             isEdit: false,
-            setEditData(actionUrl, name) {
+            setEditData(actionUrl, name, slug) {
                 this.formAction = actionUrl;
                 this.categoryName = name;
+                this.slugName = slug;
                 this.isEdit = true;
             },
             resetForm() {
                 this.formAction = '{{ route('backoffice.category.store') }}';
                 this.categoryName = '';
+                this.slugName = '';
                 this.isEdit = false;
             },
             init() {
                 window.addEventListener('set-edit-data', (event) => {
-                    const { actionUrl, name } = event.detail;
-                    this.setEditData(actionUrl, name);
+                    const { actionUrl, name, slug } = event.detail;
+                    this.setEditData(actionUrl, name, slug);
                 });
 
                 window.addEventListener('close-modal', () => {
@@ -104,9 +108,20 @@
 
                 <div class="mt-6">
                     <x-input-label for="name" value="{{ __('Category Name') }}" />
-                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-3/4"
+                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
                         placeholder="{{ __('Category Name') }}" x-model="categoryName" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
+
+                <div class="mt-2">
+                    <x-input-label for="slug">
+                        {{ __('Slug') }} <small
+                            class="text-xs text-gray-500">{{ __('Auto Generated from Category Name') }}</small>
+                    </x-input-label>
+                    <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full"
+                        placeholder="{{ __('Auto Generated from Category Name') }}" x-model="slugName"
+                        :disabled="true" />
+                    <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                 </div>
 
                 <div class="mt-6 flex justify-end">
