@@ -41,7 +41,10 @@
         @endif
 
         <x-modal.modal-delete />
+
     </div>
+
+    @stack('scripts')
 </body>
 
 </html>

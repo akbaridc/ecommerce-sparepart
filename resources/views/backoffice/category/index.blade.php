@@ -5,7 +5,7 @@
                 <div class="card-title">
                     <h3 class="text-slate-900">Category</h3>
                     <x-button.success-button x-data=""
-                        x-on:click.prevent="$dispatch('open-modal', 'form-category')"
+                        x-on:click.prevent="$dispatch('open-modal', 'form-category');$dispatch('reset-form');"
                         class="ml-auto">{{ __('Add New') }}</x-button.success-button>
                 </div>
                 <div class="card-body">
@@ -13,8 +13,9 @@
                         <table class="table w-full">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th class="text-center">#</th>
                                     <th>Name</th>
+                                    <th class="text-center">Icon</th>
                                     <th>Updated At</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -26,12 +27,24 @@
                                             {{ $loop->iteration + ($categories->currentPage() - 1) * $categories->perPage() }}
                                         </td>
                                         <td>{{ $category->name }}</td>
+                                        <td class="text-center">
+                                            @if (!empty($category->icon))
+                                                <div class="avatar">
+                                                    <div class="w-24 rounded">
+                                                        <img src="{{ asset('storage/' . $category->icon) }}" />
+                                                    </div>
+                                                </div>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
                                         <td>{{ $category->updated_at->format('d/m/Y H:i') }}</td>
                                         <td>
                                             <div class="flex gap-2 justify-center">
                                                 <x-button.warning-button x-data=""
                                                     x-on:click.prevent="
                                                             $dispatch('open-modal', 'form-category');
+                                                            $dispatch('reset-form')
                                                             $dispatch('set-edit-data', {
                                                                 actionUrl: '{{ route('backoffice.category.update', $category->id) }}',
                                                                 name: '{{ $category->name }}',
@@ -66,36 +79,9 @@
         </div>
     </div>
 
-    <x-modal.modal name="form-category" maxWidth="lg" :show="$errors->isNotEmpty()" focusable>
-        <div x-data="{
-            formAction: '{{ route('backoffice.category.store') }}',
-            categoryName: '{{ old('name') ?? '' }}',
-            slugName: '{{ old('slug') ?? '' }}',
-            isEdit: false,
-            setEditData(actionUrl, name, slug) {
-                this.formAction = actionUrl;
-                this.categoryName = name;
-                this.slugName = slug;
-                this.isEdit = true;
-            },
-            resetForm() {
-                this.formAction = '{{ route('backoffice.category.store') }}';
-                this.categoryName = '';
-                this.slugName = '';
-                this.isEdit = false;
-            },
-            init() {
-                window.addEventListener('set-edit-data', (event) => {
-                    const { actionUrl, name, slug } = event.detail;
-                    this.setEditData(actionUrl, name, slug);
-                });
-
-                window.addEventListener('close-modal', () => {
-                    this.resetForm();
-                });
-            }
-        }" x-init="init()">
-            <form method="post" :action="formAction" class="p-6">
+    <x-modal.modal name="form-category" maxWidth="md" :show="$errors->isNotEmpty()" focusable>
+        <div x-data="categoryForm" x-init="init()">
+            <form method="post" :action="formAction" class="p-6" enctype="multipart/form-data">
                 @csrf
                 <template x-if="isEdit">
                     @method('PUT')
@@ -107,10 +93,10 @@
                 </h2>
 
                 <div class="mt-6">
-                    <x-input-label for="name" value="{{ __('Category Name') }}" />
+                    <x-input-label for="name" value="{{ __('Name') }}" />
                     <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                        placeholder="{{ __('Category Name') }}" x-model="categoryName" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        placeholder="{{ __('Category Name') }}" x-model="category.value" x-on:keyup="generateSlug()" />
+                    <x-input-error x-show="category.error" :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="mt-2">
@@ -119,9 +105,20 @@
                             class="text-xs text-gray-500">{{ __('Auto Generated from Category Name') }}</small>
                     </x-input-label>
                     <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full"
-                        placeholder="{{ __('Auto Generated from Category Name') }}" x-model="slugName"
-                        :disabled="true" />
-                    <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                        placeholder="{{ __('Auto Generated from Category Name') }}" x-model="slug.value"
+                        :readonly="true" />
+                    <x-input-error x-show="slug.error" :messages="$errors->get('slug')" class="mt-2" />
+                </div>
+
+                <div class="mt-2">
+                    <x-input-label for="icon">
+                        {{ __('Icon') }} <small x-show="isEdit"
+                            class="text-xs text-gray-500">{{ __('Ignore if not changed') }}</small>
+                    </x-input-label>
+                    <x-text-input id="icon" name="icon" type="file"
+                        class="mt-1 block w-full file-input file-input-bordered file-input-sm"
+                        placeholder="{{ __('Icon') }}" x-model="icon.value" />
+                    <x-input-error x-show="icon.error" :messages="$errors->get('icon')" class="mt-2" />
                 </div>
 
                 <div class="mt-6 flex justify-end">
@@ -136,4 +133,68 @@
             </form>
         </div>
     </x-modal.modal>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('categoryForm', () => ({
+                    formAction: '{{ route('backoffice.category.store') }}',
+                    category: {
+                        value: '{{ old('name') ?? '' }}',
+                        error: {{ $errors->get('name') ? 'true' : 'false' }},
+                    },
+                    slug: {
+                        value: '{{ old('slug') ?? '' }}',
+                        error: {{ $errors->get('slug') ? 'true' : 'false' }},
+                    },
+                    icon: {
+                        value: '{{ old('icon') ?? '' }}',
+                        error: {{ $errors->get('icon') ? 'true' : 'false' }},
+                    },
+                    isEdit: false,
+
+                    setEditData(actionUrl, name, slug) {
+                        this.formAction = actionUrl;
+                        this.category.value = name;
+                        this.slug.value = slug;
+                        this.isEdit = true;
+                    },
+
+                    resetForm() {
+                        this.formAction = '{{ route('backoffice.category.store') }}';
+                        this.category.value = '';
+                        this.slug.value = '';
+                        this.isEdit = false;
+                        this.category.error = false;
+                        this.slug.error = false;
+                        this.icon.error = false;
+                    },
+
+                    generateSlug() {
+                        this.slug.value = this.category.value
+                            .toLowerCase()
+                            .trim()
+                            .replace(/[^a-z0-9\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-');
+                    },
+
+                    init() {
+                        window.addEventListener('reset-form', () => {
+                            this.resetForm();
+                        });
+
+                        window.addEventListener('set-edit-data', (event) => {
+                            const {
+                                actionUrl,
+                                name,
+                                slug
+                            } = event.detail;
+                            this.setEditData(actionUrl, name, slug);
+                        });
+                    },
+                }));
+            });
+        </script>
+    @endpush
 </x-app-layout>

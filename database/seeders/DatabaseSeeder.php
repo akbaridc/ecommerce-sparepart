@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'akbar@gmail.com',
         ]);
 
-        Category::factory(10)->create();
+        // Category::factory(10)->create();
         // Product::factory(30)->create();
     }
 }

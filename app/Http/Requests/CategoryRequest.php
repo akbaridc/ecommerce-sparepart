@@ -24,7 +24,9 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:50', 'min:3', Rule::unique(Category::class)->ignore($this->route('backoffice.category'))]
+            'name' => ['required', 'string', 'max:50', 'min:3'],
+            'slug' => ['required', 'string', 'max:50', 'min:3', Rule::unique(Category::class)->ignore(request()->route('category')->id ?? '')],
+            'icon' => [Rule::requiredIf($this->method() === 'POST'), 'image', 'mimes:jpg,jpeg,png,svg,webp,gif', 'max:500']
         ];
     }
 }

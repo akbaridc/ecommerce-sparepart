@@ -1,4 +1,4 @@
-@props(['disabled' => false])
+@props(['disabled' => false, 'readonly' => false])
 
-<input @disabled($disabled)
-    {{ $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' . ($disabled ? ' bg-slate-100' : '')]) }}>
+<input @disabled($disabled) @readonly($readonly)
+    {{ $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' . ($disabled || $readonly ? ' bg-slate-100 cursor-not-allowed' : '')]) }}>

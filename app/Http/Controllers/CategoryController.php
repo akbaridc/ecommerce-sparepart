@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -36,9 +37,12 @@ class CategoryController extends Controller
     {
         $request->validated();
 
+        $icon = $request->file('icon')->store('categories', 'public');
+
         Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
+            'icon' => $icon
         ]);
 
         return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category created successfully']);
@@ -67,10 +71,23 @@ class CategoryController extends Controller
     {
         $request->validated();
 
-        $category->update([
+        $icon = null;
+        if ($request->hasFile('icon')) {
+            $icon = $request->file('icon')->store('categories', 'public');
+
+            if ($category->icon) {
+                Storage::disk('public')->delete($category->icon);
+            }
+        }
+
+        $dataUpdated = [
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-        ]);
+        ];
+
+        if ($icon) $dataUpdated['icon'] = $icon;
+
+        $category->update($dataUpdated);
 
         return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category updated successfully']);
     }
@@ -89,7 +106,10 @@ class CategoryController extends Controller
             ]);
         }
 
+        $iconFile = $category->icon;
+
         $category->delete();
+        if ($iconFile) Storage::disk('public')->delete($iconFile);
         return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category deleted successfully']);
     }
 }
