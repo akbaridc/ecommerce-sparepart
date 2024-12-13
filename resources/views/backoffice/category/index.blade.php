@@ -85,7 +85,7 @@
                     const { actionUrl, name } = event.detail;
                     this.setEditData(actionUrl, name);
                 });
-        
+
                 window.addEventListener('close-modal', () => {
                     this.resetForm();
                 });
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <x-button.secondary-button x-on:click="$dispatch('close-modal'); resetForm()">
+                    <x-button.secondary-button x-on:click="$dispatch('close-modal', 'form-category'); resetForm()">
                         {{ __('Cancel') }}
                     </x-button.secondary-button>
 
