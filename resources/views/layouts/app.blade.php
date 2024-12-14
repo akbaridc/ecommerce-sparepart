@@ -36,7 +36,7 @@
             {{ $slot }}
         </main>
 
-        @if (session('alert-toast') && session('type') && session('message'))
+        @if (session()->get('alert-toast'))
             <x-toast.toast />
         @endif
 

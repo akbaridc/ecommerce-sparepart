@@ -7,7 +7,6 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -45,7 +44,7 @@ class CategoryController extends Controller
             'icon' => $icon
         ]);
 
-        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category created successfully']);
+        return to_route('backoffice.category.index')->with(alertResponse("success", "Category created successfully"));
     }
 
     /**
@@ -89,7 +88,7 @@ class CategoryController extends Controller
 
         $category->update($dataUpdated);
 
-        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category updated successfully']);
+        return to_route('backoffice.category.index')->with(alertResponse("success", "Category updated successfully"));
     }
 
     /**
@@ -99,17 +98,13 @@ class CategoryController extends Controller
     {
         // Check if the category is associated with any product
         if ($category->product()->exists()) {
-            return redirect()->route('backoffice.category.index')->with([
-                'alert-toast' => true,
-                'type' => 'danger',
-                'message' => 'Category cannot be deleted because it is in use by one or more product.'
-            ]);
+            return redirect()->route('backoffice.category.index')->with(alertResponse("error", "Category cannot be deleted because it is in use by one or more product."));
         }
 
         $iconFile = $category->icon;
 
         $category->delete();
         if ($iconFile) Storage::disk('public')->delete($iconFile);
-        return Redirect::route('backoffice.category.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Category deleted successfully']);
+        return to_route('backoffice.category.index')->with(alertResponse("success", "Category deleted successfully"));
     }
 }

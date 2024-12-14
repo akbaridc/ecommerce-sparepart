@@ -58,7 +58,7 @@ class ProductController extends Controller
             'image' => $image,
         ]);
 
-        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product created successfully']);
+        return to_route('backoffice.product.index')->with(alertResponse("success", "Product created successfully"));
     }
 
     /**
@@ -113,7 +113,7 @@ class ProductController extends Controller
 
         $product->update($dataUpdated);
 
-        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product updated successfully']);
+        return to_route('backoffice.product.index')->with(alertResponse("success", "Product updated successfully"));
     }
 
     /**
@@ -121,7 +121,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
+        $imageFile = $product->image;
         $product->delete();
-        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product deleted successfully']);
+        if ($imageFile) Storage::disk('public')->delete($imageFile);
+        return to_route('backoffice.product.index')->with(alertResponse("success", "Product deleted successfully"));
     }
 }
