@@ -1,8 +1,8 @@
 <div class="navbar bg-primary gap-3 p-3 items-center sticky top-0 z-[999]" x-data="{ isLogin: false }">
-    <a href="{{ route('frontstore.homepage') }}" class="w-[23%] flex justify-center">
+    <a href="{{ route('frontstore.homepage') }}" class="w-[17%] flex justify-center">
         <img src="{{ asset('image/logo.jpg') }}" alt="" class="w-[100% - 200px] h-16">
     </a>
-    <div class="flex justify-between gap-2 w-[77%]">
+    <div class="flex justify-between gap-2 w-[80%]">
         <div class="form-control w-[55%]">
             <input type="text" placeholder="type and enter ..." class="w-24 input input-bordered md:w-auto"
                 x-on:keydown.enter="window.location.href = '{{ route('frontstore.homepage') }}?search=' + $event.target.value" />

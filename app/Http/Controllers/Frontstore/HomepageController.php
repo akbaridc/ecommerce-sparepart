@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Frontstore;
 
-use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Category;
-use App\Models\Product;
 
 class HomepageController extends Controller
 {
@@ -27,7 +28,9 @@ class HomepageController extends Controller
                 });
         })->orderBy('name')->get();
 
-        return view('frontstore.homepage', compact('categoriesProducts'));
+        $banners = Banner::orderBy('order')->get(['patch']);
+
+        return view('frontstore.homepage', compact('categoriesProducts', 'banners'));
     }
 
     public function product(Request $request): View

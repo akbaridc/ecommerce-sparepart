@@ -27,7 +27,7 @@
             @include('layouts.frontstore.partials.sidebar')
 
             <!-- Main Content -->
-            <main class="flex-1 px-4 py-6" :class="show ? 'ml-[23%]' : ''">
+            <main class="flex-1 px-4 py-6" :class="show ? 'ml-[17%]' : ''">
                 {{ $slot }}
             </main>
         </div>

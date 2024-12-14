@@ -76,7 +76,7 @@
             const listBanner = () => {
                 let bannerSection = document.querySelector('.banner-section');
                 bannerSection.innerHTML =
-                    '<div class="skeleton h-60 w-full"></div><div class="skeleton h-60 w-full"></div>';
+                    '<div class="skeleton h-50 w-full"></div><div class="skeleton h-50 w-full"></div>';
 
                 setTimeout(() => {
                     fetch('{{ route('backoffice.banner.show') }}')
@@ -92,7 +92,7 @@
                                             ':id', element.id);
                                     dataHtml += `
                                     <div class="w-full relative mb-3 banner-card cursor-pointer" data-id="${element.id}">
-                                        <figure class="w-full h-60 shadow-lg border border-gray-500 rounded-md">
+                                        <figure class="w-full h-50 shadow-lg border border-gray-500 rounded-md">
                                             <span class="absolute -top-3 -right-1 cursor-pointer bg-red-400 text-white rounded-full w-8 h-8 flex justify-center items-center"
                                                 x-on:click.prevent="
                                                     url= '${urlDestroy}';
