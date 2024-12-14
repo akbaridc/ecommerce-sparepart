@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends Controller
 {
@@ -39,7 +38,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): RedirectResponse
     {
         $request->validated();
 
@@ -54,12 +53,12 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name),
             'description' => $request->description,
             'short_description' => $request->short_description,
-            'price' => $request->price,
-            'stock' => $request->stock,
+            'price' => (int)$request->price,
+            'stock' => (int)$request->stock,
             'image' => $image,
         ]);
 
-        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product created successfully']);
+        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product created successfully']);
     }
 
     /**
@@ -114,7 +113,7 @@ class ProductController extends Controller
 
         $product->update($dataUpdated);
 
-        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product updated successfully']);
+        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product updated successfully']);
     }
 
     /**
@@ -123,6 +122,6 @@ class ProductController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
-        return Redirect::route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product deleted successfully']);
+        return to_route('backoffice.product.index')->with(['alert-toast' => true, 'type' => 'success', 'message' => 'Product deleted successfully']);
     }
 }

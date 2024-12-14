@@ -115,8 +115,7 @@
                         {{ __('Icon') }} <small x-show="isEdit"
                             class="text-xs text-gray-500">{{ __('Ignore if not changed') }}</small>
                     </x-input-label>
-                    <x-text-input id="icon" name="icon" type="file"
-                        class="mt-1 block w-full file-input file-input-bordered file-input-sm"
+                    <x-input.file-input id="icon" name="icon" class="mt-1 block " accept="image/*"
                         placeholder="{{ __('Icon') }}" x-model="icon.value" />
                     <x-input-error x-show="icon.error" :messages="$errors->get('icon')" class="mt-2" />
                 </div>

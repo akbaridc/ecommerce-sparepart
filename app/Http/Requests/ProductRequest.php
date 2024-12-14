@@ -25,11 +25,20 @@ class ProductRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'exists:categories,id'],
-            'name' => ['required', 'string', 'max:50', Rule::unique(Product::class)->ignore($this->route('backoffice.product'))],
+            'name' => ['required', 'string', 'min:5', 'max:50'],
             'description' => ['required', 'string'],
             'short_description' => ['required', 'string', 'max:100'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'stock' => ['required', 'numeric', 'min:0']
+            'price' => ['required', 'numeric', 'min:1'],
+            'stock' => ['required', 'numeric', 'min:1'],
+            'image' => [Rule::requiredIf($this->method() === 'POST'), 'image', 'mimes:jpg,jpeg,png,svg,webp,gif', 'max:1028']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'Category field is required.',
+            'category_id.exists' => 'Selected category is invalid.',
         ];
     }
 }
