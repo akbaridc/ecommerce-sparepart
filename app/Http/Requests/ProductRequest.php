@@ -26,6 +26,7 @@ class ProductRequest extends FormRequest
         return [
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'min:5', 'max:50'],
+            'slug' => ['required', 'string', 'min:5', 'max:50', Rule::unique(Product::class)->ignore(request()->route('product')->id ?? '')],
             'description' => ['required', 'string'],
             'short_description' => ['required', 'string', 'max:100'],
             'price' => ['required', 'numeric', 'min:1'],

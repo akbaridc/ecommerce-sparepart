@@ -23,7 +23,7 @@
                                 @endif
 
                                 <div class="flex flex-wrap gap-2">
-                                    <div class="mb-2 w-[48%]">
+                                    <div class="mb-2 w-[30%]">
                                         <x-input-label for="category_id" value="{{ __('Category') }}" />
                                         <x-text-input id="category_id" name="category_id" type="hidden" class="mt-1"
                                             x-model="dataProduct.category" />
@@ -49,11 +49,24 @@
                                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                                     </div>
 
-                                    <div class="mb-2 w-[48%]">
+                                    <div class="mb-2 w-[34%]">
                                         <x-input-label for="name" value="{{ __('Product Name') }}" />
                                         <x-text-input id="name" name="name" type="text" class="mt-1"
-                                            placeholder="{{ __('Product Name') }}" x-model="dataProduct.name" />
+                                            placeholder="{{ __('Product Name') }}" x-model="dataProduct.name"
+                                            x-on:keyup="generateSlug()" />
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                    </div>
+
+                                    <div class="mb-2 w-[34%]">
+                                        <x-input-label for="slug">
+                                            {{ __('Slug') }} <small
+                                                class="text-xs text-gray-500">{{ __('Auto Generated from Product Name') }}</small>
+                                        </x-input-label>
+                                        <x-text-input id="slug" name="slug" type="text"
+                                            class="mt-1 block w-full"
+                                            placeholder="{{ __('Auto Generated from Product Name') }}"
+                                            x-model="dataProduct.slug" :readonly="true" />
+                                        <x-input-error x-show="slug.error" :messages="$errors->get('slug')" class="mt-2" />
                                     </div>
 
                                     <div class="mb-2 w-full">
@@ -166,6 +179,7 @@
                     dataProduct: {
                         category: '{{ old('category_id', isset($product) && $product->category_id ? $product->category_id : '') }}',
                         name: '{{ old('name', isset($product) && $product->name ? $product->name : '') }}',
+                        slug: '{{ old('slug', isset($product) && $product->slug ? $product->slug : '') }}',
                         description: '{{ old('description', isset($product) && $product->description ? $product->description : '') }}',
                         short_description: '{{ old('short_description', isset($product) && $product->short_description ? $product->short_description : '') }}',
                         price: '{{ old('price', isset($product) && $product->price ? $product->price : '') }}',
@@ -193,12 +207,25 @@
                         this.filteredCategories = [];
                     },
 
+                    generateSlug() {
+                        this.dataProduct.slug = this.dataProduct.name
+                            .toLowerCase()
+                            .trim()
+                            .replace(/[^a-z0-9\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-');
+                    },
+
                     patternNumeric(field) {
                         const input = this.dataDisplay[field];
-                        this.dataDisplay[field] = input.replace(/[^\d]+/g, "")
-                            .replace(/(\d{1,3})(?=(\d{3})+(?!\d))/g, "$1.");
+                        this.dataDisplay[field] = this.formatCurrency(input);
 
                         this.dataProduct[field] = this.reformatNumber(field);
+                    },
+
+                    formatCurrency(nominal) {
+                        return nominal.replace(/[^\d]+/g, "")
+                            .replace(/(\d{1,3})(?=(\d{3})+(?!\d))/g, "$1.")
                     },
 
                     onSubmit(event) {
@@ -223,6 +250,12 @@
                             @if (request()->routeIs('backoffice.product.edit') && isset($product))
                                 this.action = '{{ route('backoffice.product.update', $product->id) }}';
                                 this.isEdit = true;
+
+                                this.dataDisplay = {
+                                    category: '{{ $product->category->name }}',
+                                    price: this.formatCurrency('{{ $product->price }}'),
+                                    stock: this.formatCurrency('{{ $product->stock }}'),
+                                }
                             @else
                                 this.action = '{{ route('backoffice.product.store') }}';
                                 this.isEdit = false;
