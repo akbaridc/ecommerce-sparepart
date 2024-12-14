@@ -16,6 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('backoffice.banner.index')" :active="request()->routeIs('backoffice.banner.index')">
+                        {{ __('Banner') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('backoffice.category.index')" :active="request()->routeIs('backoffice.category.index')">
                         {{ __('Category') }}
                     </x-nav-link>
