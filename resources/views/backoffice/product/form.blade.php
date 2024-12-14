@@ -125,43 +125,45 @@
                             </form>
                         </div>
                     @else
-                        <div class="mb-2 w-[48%]">
-                            <x-input-label for="category" value="{{ __('Category') }}" class="mb-3" />
-                            <p class="text-gray-500">{{ $product->category->name }}</p>
-                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="mb-2 w-[48%]">
+                                <x-input-label for="category" value="{{ __('Category') }}" class="mb-3" />
+                                <p class="text-gray-500">{{ $product->category->name }}</p>
+                            </div>
 
-                        <div class="mb-2 w-[48%]">
-                            <x-input-label for="name" value="{{ __('Product Name') }}" class="mb-3" />
-                            <p class="text-gray-500">{{ $product->name }}</p>
-                        </div>
+                            <div class="mb-2 w-[48%]">
+                                <x-input-label for="name" value="{{ __('Product Name') }}" class="mb-3" />
+                                <p class="text-gray-500">{{ $product->name }}</p>
+                            </div>
 
-                        <div class="mb-2 w-full">
-                            <x-input-label for="description" value="{{ __('Description') }}" class="mb-3" />
-                            <p class="text-gray-500">{{ $product->description }}</p>
-                        </div>
+                            <div class="mb-2 w-full">
+                                <x-input-label for="description" value="{{ __('Description') }}" class="mb-3" />
+                                <p class="text-gray-500">{{ $product->description }}</p>
+                            </div>
 
-                        <div class="mb-2 w-full">
-                            <x-input-label for="short_description" value="{{ __('Short Description') }}"
-                                class="mb-3" />
-                            <p class="text-gray-500">{{ $product->short_description }}</p>
-                        </div>
+                            <div class="mb-2 w-full">
+                                <x-input-label for="short_description" value="{{ __('Short Description') }}"
+                                    class="mb-3" />
+                                <p class="text-gray-500">{{ $product->short_description }}</p>
+                            </div>
 
-                        <div class="mb-2 w-[48%]">
-                            <x-input-label for="price" value="{{ __('Price') }}" class="mb-3" />
-                            <p class="text-gray-500">{{ $product->price }}</p>
-                        </div>
+                            <div class="mb-2 w-[48%]">
+                                <x-input-label for="price" value="{{ __('Price') }}" class="mb-3" />
+                                <p class="text-gray-500">Rp. {{ formatRupiah($product->price) }}</p>
+                            </div>
 
-                        <div class="mb-2 w-[48%]">
-                            <x-input-label for="stock" value="{{ __('Stock') }}" class="mb-3" />
-                            <p class="text-gray-500">{{ $product->stock }}</p>
-                        </div>
+                            <div class="mb-2 w-[48%]">
+                                <x-input-label for="stock" value="{{ __('Stock') }}" class="mb-3" />
+                                <p class="text-gray-500">{{ formatRupiah($product->stock) }} Pcs </p>
+                            </div>
 
-                        <div class="mb-2 w-full">
-                            <x-input-label for="image" value="{{ __('Product Image') }}" class="mb-3" />
-                            <div class="w-35">
-                                @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" />
-                                @endif
+                            <div class="mb-2 w-full">
+                                <x-input-label for="image" value="{{ __('Product Image') }}" class="mb-3" />
+                                <div class="w-35">
+                                    @if ($product->image)
+                                        <img src="{{ asset('storage/' . $product->image) }}" />
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endif
