@@ -43,7 +43,7 @@ class BannerController extends Controller
         $banner->delete();
         if ($patchFile) Storage::disk('public')->delete($patchFile);
 
-        return to_route('backoffice.banner.index')->with(alertResponse("success", "Banner deleted successfully"));
+        return to_route('backoffice.banner.index')->with('success', 'Banner deleted successfully');
     }
 
     public function destroyAll()
@@ -54,6 +54,6 @@ class BannerController extends Controller
             if ($patchFile) Storage::disk('public')->delete($patchFile);
         }
 
-        return to_route('backoffice.banner.index')->with(alertResponse("success", "Banners delete successfully"));
+        return to_route('backoffice.banner.index')->with('success', 'Banners delete successfully');
     }
 }

@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        @if (session()->get('alert-toast'))
+        @if (session()->has('success') || session()->has('error'))
             <x-toast.toast />
         @endif
     </div>

@@ -58,7 +58,7 @@ class ProductController extends Controller
             'image' => $image,
         ]);
 
-        return to_route('backoffice.product.index')->with(alertResponse("success", "Product created successfully"));
+        return to_route('backoffice.product.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -113,7 +113,7 @@ class ProductController extends Controller
 
         $product->update($dataUpdated);
 
-        return to_route('backoffice.product.index')->with(alertResponse("success", "Product updated successfully"));
+        return to_route('backoffice.product.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -124,6 +124,6 @@ class ProductController extends Controller
         $imageFile = $product->image;
         $product->delete();
         if ($imageFile) Storage::disk('public')->delete($imageFile);
-        return to_route('backoffice.product.index')->with(alertResponse("success", "Product deleted successfully"));
+        return to_route('backoffice.product.index')->with('success', 'Product deleted successfully');
     }
 }
