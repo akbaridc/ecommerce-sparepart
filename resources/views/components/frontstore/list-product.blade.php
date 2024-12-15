@@ -61,10 +61,10 @@
         </div>
     </div>
 @empty
-    <div class="card bg-white w-full">
+    <div class="card bg-white w-full p-8">
         <div class="w-full flex flex-col justify-center items-center">
             <figure>
-                <img src="{{ asset('image/no-data.png') }}" class="w-30 h-24 text-center" alt="no data" />
+                <img src="{{ asset('image/no-data.png') }}" class="w-40 h-30 text-center" alt="no data" />
             </figure>
             <h3 class="font-semibold text-center">Produk Tidak Tersedia</h3>
         </div>

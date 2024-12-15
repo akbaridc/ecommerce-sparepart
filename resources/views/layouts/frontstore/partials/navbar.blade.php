@@ -3,13 +3,24 @@
         <img src="{{ asset('image/logo.jpg') }}" alt="" class="w-[100% - 200px] h-16">
     </a>
     <div class="flex justify-between gap-2 w-[80%]">
-        <div class="form-control w-[55%]">
-            <input type="text" placeholder="type and enter ..." class="w-24 input input-bordered md:w-auto"
+        <div class="join w-[65%]">
+            <button class="btn btn-sm join-item rounded-r-full bg-gray-50 hover:bg-gray-100"
+                x-on:click="window.location.href = '{{ route('frontstore.homepage') }}?search=' + $refs.searchInput.value">
+                <i class="fa-solid fa-magnifying-glass text-md text-gray-400"></i>
+            </button>
+            <input x-ref="searchInput"
+                class="input input-bordered input-sm join-item w-full focus:outline-0 focus:outline-transparent focus:outline-none focus:outline-offset-0"
+                placeholder="Cari Produk"
                 x-on:keydown.enter="window.location.href = '{{ route('frontstore.homepage') }}?search=' + $event.target.value" />
         </div>
+        {{-- <div class="form-control w-[55%]">
+            <input type="text" placeholder="type and enter ..." class="w-24 input input-bordered md:w-auto"
+                x-on:keydown.enter="window.location.href = '{{ route('frontstore.homepage') }}?search=' + $event.target.value" />
+        </div> --}}
         <div class="flex justify-end gap-4 items-center">
 
-            <x-button.success-button class="bg-transparen w-52 align-middle">
+            <x-button.success-button
+                class="bg-primary brightness-125 hover:bg-primary hover:brightness-125 border-transparent focus:ring-offset-0 focus:ring-transparent focus:ring-0 active:bg-transparent w-52 align-middle">
                 {{ __('Aktifkan Lokasi') }}
             </x-button.success-button>
 
@@ -28,9 +39,9 @@
             </svg>
 
 
-            <x-button.warning-button class="bg-yellow-400" x-show="!isLogin">
-                {{ __('Login') }}
-            </x-button.warning-button>
+            <button
+                class="inline-flex items-center justify-center px-5 py-1 rounded bg-yellow-300 text-primary font-bold"
+                x-show="!isLogin">{{ __('Login') }}</button>
 
             <div class="dropdown dropdown-end" x-show="isLogin">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
