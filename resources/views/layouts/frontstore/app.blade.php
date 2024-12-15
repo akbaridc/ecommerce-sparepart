@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'E-commerce Sparepart') }}</title>
@@ -21,6 +22,15 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+    </style>
 </head>
 
 <body class="font-sans">
@@ -32,13 +42,13 @@
             @include('layouts.frontstore.partials.sidebar')
 
             <!-- Main Content -->
-            <main class="flex-1 px-4 py-6" :class="show ? 'ml-[17%]' : ''">
+            <main class="flex-1 px-4 py-6" :class="show ? 'md:ml-[17%]' : ''">
                 {{ $slot }}
             </main>
         </div>
 
         {{-- chat customer services --}}
-        <div class="hidden md:block fixed bottom-[5.5rem] right-[4.5rem]">
+        <div class="fixed bottom-[5.5rem] -right-2 md:right-8">
             <div class="flex flex-col items-center justify-center">
                 <figure class="mb-4">
                     <img src="{{ asset('image/checkin.gif') }}" class="w-20 h-20" alt="checkin sekarang">

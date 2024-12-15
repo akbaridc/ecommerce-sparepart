@@ -38,4 +38,19 @@ class HomepageController extends Controller
         $product = Product::with('category')->where('slug', $request->productSlug)->firstOrFail();
         return view('frontstore.product', compact('product'));
     }
+
+    public function pesanan(): View
+    {
+        return view('frontstore.orders');
+    }
+
+    public function notifikasi(): View
+    {
+        return view('frontstore.notification');
+    }
+
+    public function akun(): View
+    {
+        return view('frontstore.account');
+    }
 }

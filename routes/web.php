@@ -9,11 +9,15 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontstore\HomepageController;
 
 
-Route::name('frontstore.')->group(function () {
-    Route::get('/', [HomepageController::class, 'index'])->name('homepage');
-    Route::get('category/{slug}', [HomepageController::class, 'index'])->name('category');
+Route::name('frontstore.')->controller(HomepageController::class)->group(function () {
+    Route::get('/', 'index')->name('homepage');
+    Route::get('category/{slug}', 'index')->name('category');
 
-    Route::get('product/{slug}/{productSlug}', [HomepageController::class, 'product'])->name('product');
+    Route::get('product/{slug}/{productSlug}', 'product')->name('product');
+
+    Route::get('pesanan', 'pesanan')->name('pesanan');
+    Route::get('notifikasi', 'notifikasi')->name('notifikasi');
+    Route::get('akun', 'akun')->name('akun');
 });
 
 

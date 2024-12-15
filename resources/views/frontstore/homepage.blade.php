@@ -25,8 +25,8 @@
                             <!-- Individual Slide -->
                             <div class="w-full flex-shrink-0">
                                 <figure class="w-full bg-auto bg-center bg-no-repeat rounded-lg">
-                                    <img src="{{ asset('storage/' . $banner->patch) }}" class="w-full h-50 object-cover"
-                                        alt="{{ $banner->patch }}">
+                                    <img src="{{ asset('storage/' . $banner->patch) }}"
+                                        class="w-full h-56 object-cover object-center" alt="{{ $banner->patch }}">
                                 </figure>
                             </div>
                         @endforeach

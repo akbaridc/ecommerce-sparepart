@@ -8,13 +8,13 @@
                 </figure>
 
                 <div class="mt-4 lh-lg">
-                    <h3 class="text-2xl font-semibold">{{ $product->name }}</h3>
-                    <div class="flex justify-between font-semibold text-md">
-                        <p>Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
-                        <p>{{ $product->stock }} pcs</p>
+                    <h3 class="text-2xl font-semibold">{{ $product->name }} </h3>
+                    <div class="flex gap-3 font-semibold text-md">
+                        <p>Rp. {{ formatRupiah($product->price) }}</p>
+                        <p class="text-gray-400">{{ formatRupiah($product->stock) }} pcs</p>
                     </div>
                     <p class="text-lg text-gray-500">{{ $product->description }}</p>
-                    <div class="flex justify-between mt-7">
+                    <div class="flex gap-5 mt-7">
                         <x-button.secondary-button
                             @click="window.history.back()">{{ __('Kembali') }}</x-button.secondary-button>
 

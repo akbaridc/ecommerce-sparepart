@@ -11,7 +11,7 @@
         style="background-image: url('{{ $index % 2 == 0 ? asset('image/bg-yellow-fronstore.png') : asset('image/bg-green-fronstore.png') }}');">
         <div class="card-body">
             <div class="label-section flex items-center max-w-fit min-w-fit">
-                <div class="triangle mt-3 mb-0 mx-3 bg-primary relative pl-9 pr-5 h-8 -skew-x-[30deg]">
+                <div class="triangle mt-3 mb-0 mx-3 bg-primary-500 relative pl-9 pr-5 h-8 -skew-x-[30deg]">
                     <div class="label-content flex items-center skew-x-[30deg]">
                         <div
                             class="label-icon p-2 rounded-full max-w-fit bg-white absolute -left-14 -top-[0.65em] border-2 border-gray-400 ring-primary">
@@ -27,9 +27,9 @@
                 </div>
             </div>
 
-            <div class="flex mt-6 gap-3">
+            <div class="flex flex-wrap mt-6 gap-2 md:gap-4">
                 @forelse ($category->product as $product)
-                    <div class="w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105">
+                    <div class="w-[48%] md:w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105">
                         <figure
                             @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'"
                             class="cursor-pointer">
@@ -41,8 +41,8 @@
                                 @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'">
                                 {{ \Illuminate\Support\Str::limit($product->name, 20) }}</h3>
                             <div class="flex justify-between font-semibold">
-                                <small>Rp. {{ number_format($product->price, 0, ',', '.') }}</small>
-                                <small>{{ $product->stock }} pcs</small>
+                                <small>Rp. {{ formatRupiah($product->price) }}</small>
+                                <small>{{ formatRupiah($product->stock) }} pcs</small>
                             </div>
                             <p class="text-sm text-gray-500">
                                 {{ \Illuminate\Support\Str::limit($product->short_description, 50) }}
