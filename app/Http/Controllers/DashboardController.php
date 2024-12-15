@@ -12,6 +12,7 @@ class DashboardController extends Controller
     {
         $totalCategory = Category::count();
         $totalProduct = Product::count();
-        return view('backoffice.dashboard.index', compact('totalCategory', 'totalProduct'));
+        $totalBanner = Product::count();
+        return view('backoffice.dashboard.index', compact('totalCategory', 'totalProduct', 'totalBanner'));
     }
 }

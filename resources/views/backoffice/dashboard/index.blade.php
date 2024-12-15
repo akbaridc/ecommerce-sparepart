@@ -12,6 +12,11 @@
                     <x-card.count-card color="cyan" title="products" count="{{ $totalProduct }}"
                         icon="fa-solid fa-boxes-stacked" />
                 </div>
+
+                <div class="w-1/5">
+                    <x-card.count-card color="blue" title="banners" count="{{ $totalBanner }}"
+                        icon="fa-solid fa-bandage" />
+                </div>
             </div>
         </div>
     </div>
