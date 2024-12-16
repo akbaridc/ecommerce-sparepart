@@ -8,8 +8,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="card bg-white p-5">
-                <div class="card-title">
+                <div class="card-title justify-between">
                     <h3 class="text-slate-900">Banner</h3>
+                    <div class="flex gap-2">
+                        <form action="{{ route('backoffice.banner.restore') }}" method="POST" class="inline">
+                            @csrf
+                            <x-button.primary-button x-data=""
+                                type="submit">{{ __('Restore Deleted') }}</x-button.primary-button>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div>

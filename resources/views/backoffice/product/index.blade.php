@@ -2,11 +2,18 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="card bg-white p-5">
-                <div class="card-title">
+                <div class="card-title justify-between">
                     <h3 class="text-slate-900">Product</h3>
-                    <x-button.success-button x-data=""
-                        x-on:click="window.location.href = '{{ route('backoffice.product.create') }}'"
-                        class="ml-auto">{{ __('Add New') }}</x-button.success-button>
+                    <div class="flex gap-2">
+                        <form action="{{ route('backoffice.product.restore') }}" method="POST" class="inline">
+                            @csrf
+                            <x-button.primary-button x-data=""
+                                type="submit">{{ __('Restore Deleted') }}</x-button.primary-button>
+                        </form>
+
+                        <x-button.success-button x-data=""
+                            x-on:click="window.location.href = '{{ route('backoffice.product.create') }}'">{{ __('Add New') }}</x-button.success-button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="overflow-x-auto">

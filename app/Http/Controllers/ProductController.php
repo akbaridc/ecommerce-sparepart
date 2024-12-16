@@ -123,7 +123,13 @@ class ProductController extends Controller
     {
         $imageFile = $product->image;
         $product->delete();
-        if ($imageFile) Storage::disk('public')->delete($imageFile);
+        // if ($imageFile) Storage::disk('public')->delete($imageFile);
         return to_route('backoffice.product.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function restore(): RedirectResponse
+    {
+        Product::withTrashed()->restore();
+        return to_route('backoffice.product.index')->with('success', 'Product restored successfully');
     }
 }

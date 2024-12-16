@@ -41,7 +41,7 @@ class BannerController extends Controller
     {
         $patchFile = $banner->patch;
         $banner->delete();
-        if ($patchFile) Storage::disk('public')->delete($patchFile);
+        // if ($patchFile) Storage::disk('public')->delete($patchFile);
 
         return to_route('backoffice.banner.index')->with('success', 'Banner deleted successfully');
     }
@@ -51,9 +51,15 @@ class BannerController extends Controller
         foreach (Banner::all() as $banner) {
             $patchFile = $banner->patch;
             $banner->delete();
-            if ($patchFile) Storage::disk('public')->delete($patchFile);
+            // if ($patchFile) Storage::disk('public')->delete($patchFile);
         }
 
         return to_route('backoffice.banner.index')->with('success', 'Banners delete successfully');
+    }
+
+    public function restore()
+    {
+        Banner::withTrashed()->restore();
+        return to_route('backoffice.banner.index')->with('success', 'Banners restored successfully');
     }
 }

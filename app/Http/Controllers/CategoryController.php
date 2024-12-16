@@ -104,7 +104,13 @@ class CategoryController extends Controller
         $iconFile = $category->icon;
 
         $category->delete();
-        if ($iconFile) Storage::disk('public')->delete($iconFile);
+        // if ($iconFile) Storage::disk('public')->delete($iconFile);
         return to_route('backoffice.category.index')->with('success', 'Category deleted successfully');
+    }
+
+    public function restore(): RedirectResponse
+    {
+        Category::withTrashed()->restore();
+        return to_route('backoffice.category.index')->with('success', 'Category restored successfully');
     }
 }

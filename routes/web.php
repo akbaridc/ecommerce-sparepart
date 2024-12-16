@@ -35,10 +35,13 @@ Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(func
         Route::post('/update', 'update')->name('update');
         Route::delete('{banner}', 'destroy')->name('destroy');
         Route::delete('destroy/all', 'destroyAll')->name('destroyAll');
+        Route::post('restore/deleted', 'restore')->name('restore');
     });
 
     Route::resource('category', CategoryController::class);
+    Route::post('category/restore/deleted', [CategoryController::class, 'restore'])->name('category.restore');
     Route::resource('product', ProductController::class);
+    Route::post('product/restore/deleted', [ProductController::class, 'restore'])->name('product.restore');
 });
 
 require __DIR__ . '/auth.php';
