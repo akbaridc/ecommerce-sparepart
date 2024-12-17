@@ -29,12 +29,7 @@
 
             <div class="flex flex-wrap mt-6 gap-2 md:gap-4">
                 @forelse ($category->product as $product)
-                    <div
-                        class="w-full sm:w-[48%] md:w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105 relative">
-                        @if ($product->discount > 0)
-                            <div class="absolute top-0 right-0 bg-red-200 text-red-700 text-xs font-bold rounded-l p-2">
-                                {{ formatRupiah($product->discount) }} %</div>
-                        @endif
+                    <div class="w-full sm:w-[48%] md:w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105">
                         <figure
                             @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'"
                             class="cursor-pointer">
@@ -45,26 +40,41 @@
                             <h3 class="card-title text-lg cursor-pointer"
                                 @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'">
                                 {{ \Illuminate\Support\Str::limit($product->name, 20) }}</h3>
-                            <div class="flex justify-between font-semibold">
-                                <div>
-                                    @if ($product->discount > 0)
-                                        <div>
-                                            <s class="text-xs text-red-500">Rp. {{ formatRupiah($product->price) }}</s>
-                                            <small>{{ formatRupiah($product->price - ($product->price * $product->discount) / 100) }}</small>
+                            <div class="font-semibold">
+                                @if ($product->discount > 0)
+                                    <div class="flex flex-col">
+                                        <p class="text-red-400 text-xl">
+                                            Rp.
+                                            {{ formatRupiah($product->price - ($product->price * $product->discount) / 100) }}
+                                        </p>
+                                        <div class="flex gap-2">
+                                            <s class="text-xs text-gray-500">Rp.
+                                                {{ formatRupiah($product->price) }}</s>
+                                            <small>- {{ formatRupiah($product->discount) }}%</small>
                                         </div>
-                                    @else
-                                        <small>Rp. {{ formatRupiah($product->price) }}</small>
-                                    @endif
-                                </div>
 
-                                <small>{{ formatRupiah($product->stock) }} pcs</small>
+                                    </div>
+                                @else
+                                    <p class="text-xl">Rp. {{ formatRupiah($product->price) }}</p><br>
+                                @endif
+
                             </div>
-                            <p class="text-sm text-gray-500">
-                                {{ \Illuminate\Support\Str::limit($product->short_description, 50) }}
-                            </p>
 
-                            <x-button.success-button class="mt-3 w-full" x-data=""
-                                @click="console.log('oke')">{{ __('Pesan') }}</x-button.success-button>
+                            {{-- <p class="text-sm text-gray-500">
+                                {{ \Illuminate\Support\Str::limit($product->short_description, 50) }}
+                            </p> --}}
+
+                            <div class="mt-3 flex justify-between items-center">
+                                <small class="text-gray-500">Stock {{ formatRupiah($product->stock) }} pcs</small>
+
+                                <div>
+                                    <button>
+                                        <i class="fa fa-shopping-cart me-2 text-2xl text-green-400 cursor-pointer"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 @empty
