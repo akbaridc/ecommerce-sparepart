@@ -31,6 +31,7 @@ class ProductRequest extends FormRequest
             'short_description' => ['required', 'string', 'max:100'],
             'price' => ['required', 'numeric', 'min:1'],
             'stock' => ['required', 'numeric', 'min:1'],
+            'discount' => ['numeric', 'min:0', 'max:100'],
             'image' => [Rule::requiredIf($this->method() === 'POST'), 'image', 'mimes:jpg,jpeg,png,svg,webp,gif', 'max:1028']
         ];
     }

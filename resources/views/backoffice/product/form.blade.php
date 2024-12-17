@@ -106,6 +106,14 @@
                                     </div>
 
                                     <div class="mb-2 w-[32%]">
+                                        <x-input-label for="discount" value="{{ __('Discount %') }}" />
+                                        <x-text-input id="discount" name="discount" type="text" class="mt-1"
+                                            placeholder="{{ __('Discount') }}" x-model="dataProduct.discount"
+                                            x-on:input="patternNumeric('discount')" />
+                                        <x-input-error :messages="$errors->get('discount')" class="mt-2" />
+                                    </div>
+
+                                    <div class="mb-2 w-[32%]">
                                         <x-input-label for="image">
                                             {{ __('Product Image') }} <small
                                                 class="text-xs text-gray-500">{{ isset($product) ? __('Ignore if not changed') : '' }}</small>
@@ -147,14 +155,19 @@
                                 <p class="text-gray-500">{{ $product->short_description }}</p>
                             </div>
 
-                            <div class="mb-2 w-[48%]">
+                            <div class="mb-2 w-[32%]">
                                 <x-input-label for="price" value="{{ __('Price') }}" class="mb-3" />
                                 <p class="text-gray-500">Rp. {{ formatRupiah($product->price) }}</p>
                             </div>
 
-                            <div class="mb-2 w-[48%]">
+                            <div class="mb-2 w-[32%]">
                                 <x-input-label for="stock" value="{{ __('Stock') }}" class="mb-3" />
                                 <p class="text-gray-500">{{ formatRupiah($product->stock) }} Pcs </p>
+                            </div>
+
+                            <div class="mb-2 w-[32%]">
+                                <x-input-label for="discount" value="{{ __('Discount') }}" class="mb-3" />
+                                <p class="text-gray-500">{{ formatRupiah($product->discount) }} % </p>
                             </div>
 
                             <div class="mb-2 w-full">
@@ -186,6 +199,7 @@
                         short_description: '{{ old('short_description', isset($product) && $product->short_description ? $product->short_description : '') }}',
                         price: '{{ old('price', isset($product) && $product->price ? $product->price : '') }}',
                         stock: '{{ old('stock', isset($product) && $product->stock ? $product->stock : '') }}',
+                        discount: '{{ old('discount', isset($product) && $product->discount ? $product->discount : 0) }}',
                         image: '{{ old('image') ?? '' }}',
                     },
                     dataDisplay: {
@@ -219,10 +233,15 @@
                     },
 
                     patternNumeric(field) {
-                        const input = this.dataDisplay[field];
-                        this.dataDisplay[field] = this.formatCurrency(input);
+                        if (field === 'discount') {
+                            this.dataProduct[field] = this.formatCurrency(this.dataProduct[field]);
+                        } else {
+                            const input = this.dataDisplay[field];
+                            this.dataDisplay[field] = this.formatCurrency(input);
 
-                        this.dataProduct[field] = this.reformatNumber(field);
+                            this.dataProduct[field] = this.reformatNumber(field);
+                        }
+
                     },
 
                     formatCurrency(nominal) {

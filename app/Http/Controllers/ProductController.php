@@ -55,6 +55,7 @@ class ProductController extends Controller
             'short_description' => $request->short_description,
             'price' => (int)$request->price,
             'stock' => (int)$request->stock,
+            'discount' => (int)Str::replace('.', '', $request->discount),
             'image' => $image,
         ]);
 
@@ -106,7 +107,8 @@ class ProductController extends Controller
             'description' => $request->description,
             'short_description' => $request->short_description,
             'price' => $request->price,
-            'stock' => $request->stock
+            'stock' => $request->stock,
+            'discount' => (int)Str::replace('.', '', $request->discount),
         ];
 
         if ($image) $dataUpdated['image'] = $image;

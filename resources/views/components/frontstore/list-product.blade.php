@@ -29,7 +29,12 @@
 
             <div class="flex flex-wrap mt-6 gap-2 md:gap-4">
                 @forelse ($category->product as $product)
-                    <div class="w-[48%] md:w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105">
+                    <div
+                        class="w-full sm:w-[48%] md:w-1/5 card bg-base-100 shadow-xl hover:shadow-2xl hover:scale-105 relative">
+                        @if ($product->discount > 0)
+                            <div class="absolute top-0 right-0 bg-red-200 text-red-700 text-xs font-bold rounded-l p-2">
+                                {{ formatRupiah($product->discount) }} %</div>
+                        @endif
                         <figure
                             @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'"
                             class="cursor-pointer">
@@ -41,7 +46,17 @@
                                 @click="window.location.href = '{{ route('frontstore.product', ['slug' => $category->slug, 'productSlug' => $product->slug]) }}'">
                                 {{ \Illuminate\Support\Str::limit($product->name, 20) }}</h3>
                             <div class="flex justify-between font-semibold">
-                                <small>Rp. {{ formatRupiah($product->price) }}</small>
+                                <div>
+                                    @if ($product->discount > 0)
+                                        <div>
+                                            <s class="text-xs text-red-500">Rp. {{ formatRupiah($product->price) }}</s>
+                                            <small>{{ formatRupiah($product->price - ($product->price * $product->discount) / 100) }}</small>
+                                        </div>
+                                    @else
+                                        <small>Rp. {{ formatRupiah($product->price) }}</small>
+                                    @endif
+                                </div>
+
                                 <small>{{ formatRupiah($product->stock) }} pcs</small>
                             </div>
                             <p class="text-sm text-gray-500">

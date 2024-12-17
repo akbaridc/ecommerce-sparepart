@@ -1,7 +1,7 @@
 <x-app-front-layout>
     <div class="mx-auto max-w-full sm:px-6 lg:px-8">
         <div class="overflow-hidden p-6 text-gray-900 bg-white shadow-sm sm:rounded-lg">
-            <div>
+            <div class="relative">
                 <figure>
                     <img src="{{ $product->image ? asset('storage/' . $product->image) : asset('image/no-image.jpg') }}"
                         class="w-full object-cover" alt="$product->name" />
@@ -10,7 +10,17 @@
                 <div class="mt-4 lh-lg">
                     <h3 class="text-2xl font-semibold">{{ $product->name }} </h3>
                     <div class="flex gap-3 font-semibold text-md">
-                        <p>Rp. {{ formatRupiah($product->price) }}</p>
+                        <div>
+                            @if ($product->discount > 0)
+                                <div class="flex gap-2">
+                                    <s class="text text-red-500">Rp. {{ formatRupiah($product->price) }}</s>
+                                    <p>{{ formatRupiah($product->price - ($product->price * $product->discount) / 100) }}
+                                    </p>
+                                </div>
+                            @else
+                                <p>Rp. {{ formatRupiah($product->price) }}</p>
+                            @endif
+                        </div>
                         <p class="text-gray-400">{{ formatRupiah($product->stock) }} pcs</p>
                     </div>
                     <p class="text-lg text-gray-500">{{ $product->description }}</p>

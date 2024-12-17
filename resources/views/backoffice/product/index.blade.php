@@ -26,6 +26,7 @@
                                     <th>Description</th>
                                     <th>Price</th>
                                     <th>Stock</th>
+                                    <th>Discount</th>
                                     <th>Image</th>
                                     <th>Updated At</th>
                                     <th class="text-center">Actions</th>
@@ -40,8 +41,20 @@
                                         <td>{{ $product->category->name }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ \Illuminate\Support\Str::limit($product->description, 50) }}</td>
-                                        <td>{{ number_format($product->price, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($product->stock, 0, ',', '.') }}</td>
+                                        <td>
+                                            @if ($product->discount > 0)
+                                                <div class="lh-sm">
+                                                    <s class="text-red-500 text-sm">
+                                                        {{ formatRupiah($product->price) }}</s>
+                                                    <p>{{ formatRupiah($product->price - ($product->price * $product->discount) / 100) }}
+                                                    </p>
+                                                </div>
+                                            @else
+                                                {{ formatRupiah($product->price) }}
+                                            @endif
+                                        </td>
+                                        <td>{{ formatRupiah($product->stock) }}</td>
+                                        <td>{{ formatRupiah($product->discount) }} %</td>
                                         <td class="text-center">
                                             @if (!empty($product->image))
                                                 <div class="avatar">
