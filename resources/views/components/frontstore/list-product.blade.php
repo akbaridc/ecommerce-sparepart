@@ -68,8 +68,9 @@
                                 <small class="text-gray-500">Stock {{ formatRupiah($product->stock) }} pcs</small>
 
                                 <div>
-                                    <button>
-                                        <i class="fa fa-shopping-cart me-2 text-2xl text-green-400 cursor-pointer"></i>
+                                    <button class="tooltip tooltip-bottom" data-tip="Add to cart">
+                                        <i class="fa fa-shopping-cart me-2 text-2xl text-green-400 cursor-pointer"
+                                            @click="addToCart('{{ $product->id }}', '{{ $product->price }}', '{{ $product->discount }}'); setLabelCarts(); showToast('success', 'Product added to cart')"></i>
                                     </button>
 
                                 </div>

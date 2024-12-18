@@ -39,12 +39,14 @@
     <div class="min-h-screen bg-gray-100">
         @include('layouts.frontstore.partials.navbar')
 
-        <div class="flex" x-data="{ show: true }">
+        <div class="flex" x-data="{ show: true, sidebar: {{ !in_array(request()->route()->getName(), ['frontstore.cart', 'frontstore.checkout']) ? true : false }} }">
             <!-- Sidebar -->
-            @include('layouts.frontstore.partials.sidebar')
+            @if (!in_array(request()->route()->getName(), ['frontstore.cart', 'frontstore.checkout']))
+                @include('layouts.frontstore.partials.sidebar')
+            @endif
 
             <!-- Main Content -->
-            <main class="flex-1 px-4 py-6" :class="show ? 'md:ml-[17%]' : ''">
+            <main class="flex-1 px-4 py-6" :class="show ? (sidebar ? 'md:ml-[17%]' : '') : ''">
                 {{ $slot }}
             </main>
         </div>
@@ -67,6 +69,9 @@
             <x-toast.toast />
         @endif
     </div>
+
+    @include('layouts.frontstore.partials.global-scripts')
+    @stack('scripts')
 </body>
 
 </html>
