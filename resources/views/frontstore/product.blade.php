@@ -9,7 +9,7 @@
                     </figure>
                 </div>
 
-                <div class="lh-lg w-[77%]">
+                <div class="lh-lg w-[77%]" x-data="{ quantity: 1, stock: {{ $product->stock }} }">
                     <h3 class="text-3xl font-semibold">{{ $product->name }} </h3>
                     <div class="flex gap-1 mt-1 text-gray-400">
                         {{-- <div>0 Ulasan</div>
@@ -36,13 +36,12 @@
                     <div class="flex items-center gap-4 mt-3">
                         <div class="flex items-center gap-2">
                             <span class="font-medium">Qty</span>
-                            <div class="flex items-center border rounded-md shadow" x-data="{ quantity: 1, stock: {{ $product->stock }} }">
+                            <div class="flex items-center border rounded-md shadow">
                                 <button class="btn btn-sm btn-ghost disabled:bg-transparent disabled:cursor-not-allowed"
                                     :disabled="quantity <= 1"
                                     @click="quantity > 1 ? quantity-- : quantity = 1">-</button>
-                                <input type="text" id="quantity"
-                                    x-on:input="quantity = quantity.replace(/[^\d]+/g, '')" x-model="quantity"
-                                    class="w-12 text-center border-0 focus:shadow-transparent focus:outline-0 focus:outline-transparent focus:outline-none focus:outline-offset-0" />
+                                <input type="text" id="quantity" x-model="quantity"
+                                    class="w-12 numeric text-center border-0 focus:shadow-transparent focus:outline-0 focus:outline-transparent focus:outline-none focus:outline-offset-0" />
                                 <button class="btn btn-sm btn-ghost" :disabled="quantity >= stock"
                                     @click="quantity++">+</button>
                             </div>
@@ -50,7 +49,9 @@
                         <span class="text-gray-400 text-sm">Stock {{ formatRupiah($product->stock) }}</span>
                     </div>
                     <div class="flex gap-3 my-5">
-                        <x-button.info-button class="py-3"> <i class="fa fa-shopping-cart me-2"></i>
+                        <x-button.info-button class="py-3"
+                            @click="updateCart('{{ $product->id }}', 'button', quantity, '{{ $product }}');setLabelCarts();showToast('success', 'Product added to cart')">
+                            <i class="fa fa-shopping-cart me-2"></i>
                             {{ __('Add to Cart') }}</x-button.info-button>
                         <x-button.success-button class="py-3"> <i class="fa-solid fa-dollar-sign me-2"></i>
                             {{ __('Buy Now') }}</x-button.success-button>

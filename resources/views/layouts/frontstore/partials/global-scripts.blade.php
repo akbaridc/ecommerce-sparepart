@@ -1,6 +1,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         setLabelCarts()
+
+        document.addEventListener("input", function(event) {
+            if (event.target.classList.contains("numeric")) {
+                event.target.value = event.target.value.replace(/[^\d.]+/g, "");
+            }
+        });
     })
 
     const showToast = (type, message) => {
@@ -60,7 +66,7 @@
     };
 
 
-    const addToCart = (id, price, discount, qty = 1) => {
+    const addToCart = (id, product, price, discount, qty = 1) => {
         let carts = getCarts();
 
         const productIndex = carts.findIndex(item => item.product_id == id);
@@ -70,6 +76,7 @@
         } else {
             carts.push({
                 product_id: id,
+                product: product,
                 price: parseInt(price),
                 discount: parseInt(discount),
                 qty: parseInt(qty)
@@ -79,6 +86,35 @@
         localStorage.setItem('carts', JSON.stringify(carts));
     };
 
+    const updateCart = (id, separator = '+', qty, element = null) => {
+
+        let carts = getCarts();
+
+        const productIndex = carts.findIndex(item => item.product_id == id);
+
+        if (productIndex !== -1) {
+            if (separator === '+') carts[productIndex].qty++;
+            if (separator === '-') carts[productIndex].qty--;
+            if (separator === 'input') carts[productIndex].qty = parseInt(qty);
+            if (separator === 'button') carts[productIndex].qty += parseInt(qty);
+        } else {
+            if (element) {
+                carts.push({
+                    product_id: id,
+                    product: element.name,
+                    price: parseInt(element.price),
+                    discount: parseInt(element.discount),
+                    qty: parseInt(qty)
+                })
+            }
+
+        }
+
+
+        localStorage.setItem('carts', JSON.stringify(carts));
+
+    }
+
 
     const removeProductCart = (id = null) => {
         let carts = getCarts();
@@ -87,5 +123,55 @@
 
         let newCart = carts.filter((item) => item.product_id != id);
         localStorage.setItem('carts', JSON.stringify(newCart));
+    }
+
+    const requestAjax = (urlRequest, dataRequet = {}, typePost, typeOutput, callbackSuccess, multipartFormdata =
+        "") => {
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+
+        if (typePost == "GET") {
+
+            fetch(urlRequest, {
+                method: 'GET',
+                headers: headers
+            }).then(result => result.json()).then(response => callbackSuccess(response));
+        }
+
+        if (typePost == "POST" || typePost == 'PUT' || typePost === "DELETE") {
+            if (multipartFormdata === "") {
+
+                fetch(urlRequest, {
+                    method: typePost,
+                    headers: headers,
+                    body: JSON.stringify(dataRequet)
+                }).then(result => result.json()).then(response => callbackSuccess(response));
+            }
+
+            if (multipartFormdata === "multipart-formdata") {
+
+                fetch(urlRequest, {
+                    method: typePost,
+                    headers: headers,
+                    body: multipartFormdata === "multipart-formdata" ? dataRequet.dataForm : JSON.stringify(
+                        dataRequet)
+                }).then(result => result.json()).then(response => callbackSuccess(response));
+            }
+
+            if (multipartFormdata !== "" && multipartFormdata !== "multipart-formdata") {
+                showToast("error",
+                    'If you upload file, parameter the last must be <strong>multipart-formdata</strong>');
+                return false;
+            }
+        }
+    }
+
+    const formatRupiah = (number) => {
+        return new Intl.NumberFormat("id-ID", {
+            currency: "IDR"
+        }).format(number);
     }
 </script>

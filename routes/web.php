@@ -7,17 +7,27 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontstore\HomepageController;
+use App\Http\Controllers\Frontstore\CheckoutController;
 
 
 Route::name('frontstore.')->controller(HomepageController::class)->group(function () {
-    Route::get('/', 'index')->name('homepage');
-    Route::get('category/{slug}', 'index')->name('category');
+    Route::controller(HomepageController::class)->group(function () {
+        Route::get('/', 'index')->name('homepage');
+        Route::get('category/{slug}', 'index')->name('category');
 
-    Route::get('product/{slug}/{productSlug}', 'product')->name('product');
+        Route::get('product/{slug}/{productSlug}', 'product')->name('product');
 
-    Route::get('pesanan', 'pesanan')->name('pesanan');
-    Route::get('notifikasi', 'notifikasi')->name('notifikasi');
-    Route::get('akun', 'akun')->name('akun');
+        Route::get('pesanan', 'pesanan')->name('pesanan');
+        Route::get('notifikasi', 'notifikasi')->name('notifikasi');
+        Route::get('akun', 'akun')->name('akun');
+    });
+
+    Route::controller(CheckoutController::class)->group(function () {
+        Route::get('/cart', 'cart')->name('cart');
+        Route::post('/cart/show', 'cartShow')->name('cart.show');
+
+        Route::get('/checkout', 'checkout')->name('checkout');
+    });
 });
 
 

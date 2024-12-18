@@ -39,11 +39,17 @@
     <div class="min-h-screen bg-gray-100">
         @include('layouts.frontstore.partials.navbar')
 
-        <div class="flex" x-data="{ show: true, sidebar: {{ !in_array(request()->route()->getName(), ['frontstore.cart', 'frontstore.checkout']) ? true : false }} }">
+        <div class="flex" x-data="{
+            show: true,
+            sidebar: null,
+            init() {
+                this.sidebar = '{{ !in_array(request()->route()->getName(), ['frontstore.cart', 'frontstore.checkout', 'frontstore.cart.show']) ? true : false }}';
+            }
+        }">
             <!-- Sidebar -->
-            @if (!in_array(request()->route()->getName(), ['frontstore.cart', 'frontstore.checkout']))
+            <div x-show="sidebar">
                 @include('layouts.frontstore.partials.sidebar')
-            @endif
+            </div>
 
             <!-- Main Content -->
             <main class="flex-1 px-4 py-6" :class="show ? (sidebar ? 'md:ml-[17%]' : '') : ''">
