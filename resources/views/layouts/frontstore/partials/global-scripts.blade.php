@@ -125,6 +125,52 @@
         localStorage.setItem('carts', JSON.stringify(newCart));
     }
 
+    const getAddress = () => {
+        return localStorage.getItem('address') ? JSON.parse(localStorage.getItem('address')) : [];
+    }
+
+    const addToAddress = (params) => {
+        let address = getAddress();
+
+        if(address.main_address == 1) {
+            address.map(item => ({ ...item, main_address: 0 }));
+        }
+        address.push(params);
+
+        localStorage.setItem('address', JSON.stringify(address));
+    };
+
+    const updateAddress = (id, params) => {
+
+        let address = getAddress();
+
+        const addressIndex = address.findIndex(item => item.id == id);
+
+        if (addressIndex !== -1) {
+            address[addressIndex] = {
+                id: id,
+                fullname: params.fullname,
+                phone: params.phone,
+                address: params.address,
+                markas: params.markas,
+                main_address: params.main_address
+            }
+        } 
+
+        localStorage.setItem('address', JSON.stringify(address));
+    }
+
+
+    const removeAddress = (id = null) => {
+        let address = getAddress();
+
+        let newAddress = address.filter((item) => item.id != id).map((item, index) => {
+            item.id = index + 1;
+            return item;
+        });
+        localStorage.setItem('address', JSON.stringify(newAddress));
+    }
+
     const requestAjax = (urlRequest, dataRequet = {}, typePost, typeOutput, callbackSuccess, multipartFormdata =
         "") => {
 
