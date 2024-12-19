@@ -40,6 +40,7 @@ class CheckoutController extends Controller
 
         try {
             $order = [
+                'code' => $request->codeTransaction,
                 'name' => $address['fullname'],
                 'phone' => $address['phone'],
                 'address' => $address['address']

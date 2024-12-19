@@ -428,8 +428,10 @@
 
                 if (!mainAddress) return showToast('error', 'Your main address is empty, please add main address first');
 
+                const codeTransaction = '{{ codeTransaction() }}';
+
                 let message = "";
-                message += 'Order Product\n\n';
+                message += `Order Product *${codeTransaction}*\n\n`;
 
                 let total = 0;
                 carts.forEach((item, index) => {
@@ -439,7 +441,7 @@
                 })
 
                 message += '------------------------------------------\n'
-                message += `Total: Rp. ${formatRupiah(total)}\n\n`;
+                message += `*Total: Rp. ${formatRupiah(total)}*\n\n`;
 
                 message += 'Address\n\n';
 
@@ -451,7 +453,8 @@
 
                 requestAjax('{{ route('frontstore.checkout.store') }}', {
                     carts,
-                    mainAddress
+                    mainAddress,
+                    codeTransaction
                 }, 'POST', function(response) {});
 
                 removeProductCart();
