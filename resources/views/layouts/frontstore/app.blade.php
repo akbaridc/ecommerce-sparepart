@@ -52,7 +52,7 @@
             </div>
 
             <!-- Main Content -->
-            <main class="flex-1 px-4 py-6" :class="show ? (sidebar ? 'md:ml-[17%]' : '') : ''">
+            <main class="flex-1 px-4 py-6 mb-16 md:mb-5" :class="show ? (sidebar ? 'md:ml-[17%]' : '') : ''">
                 {{ $slot }}
             </main>
         </div>
@@ -63,7 +63,7 @@
                 <figure class="mb-4">
                     <img src="{{ asset('image/checkin.gif') }}" class="w-20 h-20" alt="checkin sekarang">
                 </figure>
-                <a href="https://api.whatsapp.com/send?phone=6283111693720&text=Hi%20Belanjaparts,%20saya%20ingin%20membeli%20spareparts."
+                <a href="https://api.whatsapp.com/send?phone={{ site()->phone }}&text=Hi%20Belanjaparts,%20saya%20ingin%20membeli%20spareparts."
                     target="_blank"
                     class="flex items-center justify-center bg-green-500 text-white p-4 rounded-full w-12 h-12 shadow-lg">
                     <i class="fa-brands fa-whatsapp text-3xl"></i>

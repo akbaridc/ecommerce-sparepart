@@ -1,7 +1,7 @@
 <x-app-front-layout>
     <div class="mx-auto max-w-full sm:px-6 lg:px-8">
         <div class="flex flex-wrap gap-4" x-data="cartData">
-            <div class="overflow-hidden p-6 text-gray-900 bg-white shadow-sm sm:rounded-lg w-[58%]">
+            <div class="overflow-hidden p-6 text-gray-900 bg-white shadow-sm sm:rounded-lg w-full md:w-[58%]">
                 <div class="flex justify-between">
                     <h4>Your cart <span class="font-bold" x-text="'( ' + cart.length + ' items )'"></span></h4>
                     <x-button.warning-button x-on:click="window.location.href = '{{ route('frontstore.homepage') }}'">
@@ -11,7 +11,7 @@
                 <div class="divider"></div>
                 <div class="section-product"></div>
             </div>
-            <div class="w-[40%] ms-auto">
+            <div class="w-full md:w-[40%] ms-auto">
                 <div class="p-6 text-gray-900 bg-white shadow-sm sm:rounded-lg max-h-fit">
                     <h1 class="font-bold text-xl uppercase">{{ __('Summary Order') }}</h1>
                     <div class="divider"></div>
@@ -161,8 +161,8 @@
                                         if (element.discount > 0) {
                                             elementPrice =
                                                 `<div class="flex items-center gap-2">
-                                                    <s class="text-gray-500">Rp.  <span x-text="formatRupiah(vprice)"></span></s>
-                                                    <p class="text-red-400" x-text="formatRupiah(vprice_discount)"></p>
+                                                    <s class="text-gray-500 text-sm md:text-md">Rp.  <span x-text="formatRupiah(vprice)"></span></s>
+                                                    <p class="text-red-400 text-sm md:text-md" x-text="formatRupiah(vprice_discount)"></p>
                                                 </div>`
                                         }
 
