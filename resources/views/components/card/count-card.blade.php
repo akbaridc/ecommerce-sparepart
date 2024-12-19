@@ -3,7 +3,7 @@
 <div class="card shadow-md bg-white rounded-md">
     <div class="card-body p-4">
         <div class="flex items-center gap-3">
-            <div class="flex items-center justify-center rounded-full w-11 h-11 p-3 bg-{{ $color }}-300">
+            <div class="flex items-center justify-center rounded-full w-11 h-11 p-3 {{ $color }}">
                 <i class="{{ $icon }} text-lg"></i>
             </div>
             <div>
