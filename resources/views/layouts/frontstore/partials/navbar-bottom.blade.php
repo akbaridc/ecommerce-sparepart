@@ -11,33 +11,33 @@
             class="{{ request()->routeIs('frontstore.homepage') ? 'active-bottom-nav' : 'text-gray-400' }} text-center text-sm">
             Beranda</p>
     </a>
-    <a class="btn-nav-item" href="{{ route('frontstore.pesanan') }}">
+    <a class="btn-nav-item" href="{{ route('frontstore.cart') }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 25 25" color="{{ request()->routeIs('frontstore.pesanan') ? '#01573e' : '#9d9d9d' }}"
+            viewBox="0 0 25 25" color="{{ request()->routeIs('frontstore.cart') ? '#01573e' : '#9d9d9d' }}"
             style="shape-rendering: geometricprecision; text-rendering: geometricprecision; fill-rule: evenodd; clip-rule: evenodd;">
             <g>
-                <path fill="{{ request()->routeIs('frontstore.pesanan') ? '#01573e' : '#9d9d9d' }}"
+                <path fill="{{ request()->routeIs('frontstore.cart') ? '#01573e' : '#9d9d9d' }}"
                     d="M7.666 1.904c3.454 -0.045 6.904 0.004 10.352 0.146 2.348 0.623 3.699 2.136 4.053 4.541a345.579 345.579 0 0 1 0 11.621c-0.442 2.656 -1.988 4.202 -4.639 4.639 -3.288 0.065 -6.575 0.065 -9.863 0 -2.511 -0.461 -4.025 -1.942 -4.541 -4.443 -0.095 -4.17 -0.063 -8.337 0.098 -12.5 0.682 -2.294 2.196 -3.629 4.541 -4.004Zm0.098 1.855c3.19 -0.016 6.38 0 9.57 0.049 1.61 0.308 2.57 1.268 2.881 2.881 0.065 3.809 0.065 7.617 0 11.426 -0.31 1.612 -1.27 2.572 -2.881 2.881 -3.223 0.065 -6.445 0.065 -9.668 0 -1.853 -0.454 -2.813 -1.642 -2.881 -3.564a156.548 156.548 0 0 1 0.098 -10.84c0.371 -1.559 1.331 -2.503 2.881 -2.832Z"
                     style="opacity: 0.971;"></path>
             </g>
             <g>
-                <path fill="{{ request()->routeIs('frontstore.pesanan') ? '#01573e' : '#9d9d9d' }}"
+                <path fill="{{ request()->routeIs('frontstore.cart') ? '#01573e' : '#9d9d9d' }}"
                     d="M8.643 7.178a22.517 22.517 0 0 1 3.516 0.146c0.374 0.323 0.488 0.73 0.342 1.221 -0.081 0.212 -0.228 0.358 -0.439 0.439a33.446 33.446 0 0 1 -3.613 0c-0.573 -0.297 -0.72 -0.736 -0.439 -1.318 0.176 -0.227 0.388 -0.39 0.635 -0.488Z"
                     style="opacity: 0.393;"></path>
             </g>
             <g>
-                <path fill="{{ request()->routeIs('frontstore.pesanan') ? '#01573e' : '#9d9d9d' }}"
+                <path fill="{{ request()->routeIs('frontstore.cart') ? '#01573e' : '#9d9d9d' }}"
                     d="M8.447 11.572c2.735 -0.016 5.469 0 8.203 0.049 0.583 0.331 0.729 0.803 0.439 1.416 -0.129 0.194 -0.308 0.308 -0.537 0.342a164.103 164.103 0 0 1 -8.008 0c-0.876 -0.556 -0.909 -1.158 -0.098 -1.807Z"
                     style="opacity: 0.385;"></path>
             </g>
             <g>
-                <path fill="{{ request()->routeIs('frontstore.pesanan') ? '#01573e' : '#9d9d9d' }}"
+                <path fill="{{ request()->routeIs('frontstore.cart') ? '#01573e' : '#9d9d9d' }}"
                     d="M8.35 15.967c2.8 -0.016 5.599 0 8.398 0.049 0.65 0.558 0.65 1.111 0 1.66 -2.8 0.065 -5.599 0.065 -8.398 0 -0.633 -0.566 -0.633 -1.135 0 -1.709Z"
                     style="opacity: 0.398;"></path>
             </g>
         </svg>
         <p
-            class="{{ request()->routeIs('frontstore.pesanan') ? 'active-bottom-nav' : 'text-gray-400' }} text-center text-sm">
+            class="{{ request()->routeIs('frontstore.cart') ? 'active-bottom-nav' : 'text-gray-400' }} text-center text-sm">
             Pesanan</p>
     </a>
     <a class="btn-nav-item" href="{{ route('frontstore.notifikasi') }}">
