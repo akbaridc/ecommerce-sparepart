@@ -449,7 +449,7 @@
                 // message += `*Phone*: ${mainAddress.phone}\n`;
                 message += `*Address*: ${mainAddress.address}\n`;
 
-                window.open(`https://wa.me/+6283111693720?text=${encodeURI(message)}`, 'blank');
+                window.open(`https://wa.me/{{ formatPhoneNumber(site()->phone) }}?text=${encodeURI(message)}`, 'blank');
 
                 requestAjax('{{ route('frontstore.checkout.store') }}', {
                     carts,

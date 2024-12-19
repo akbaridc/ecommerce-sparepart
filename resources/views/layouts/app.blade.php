@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'E-commerce Sparepart') }}</title>
+    <title>{{ site()->name ?? config('app.name', 'Belanja') }}</title>
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . site()->favicon ?? 'favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,6 +53,7 @@
 
     </div>
 
+    @include('layouts.backoffice.global-scripts')
     @stack('scripts')
 </body>
 

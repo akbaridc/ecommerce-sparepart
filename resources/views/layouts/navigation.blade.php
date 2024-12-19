@@ -32,6 +32,10 @@
                     ])">
                         {{ __('Product') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('backoffice.site.index')" :active="in_array(request()->route()->getName(), ['backoffice.site.index'])">
+                        {{ __('Setting') }}
+                    </x-nav-link>
                 </div>
             </div>
 

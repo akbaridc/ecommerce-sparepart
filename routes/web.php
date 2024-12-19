@@ -5,6 +5,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SitesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontstore\HomepageController;
 use App\Http\Controllers\Frontstore\CheckoutController;
@@ -53,6 +54,12 @@ Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(func
     Route::post('category/restore/deleted', [CategoryController::class, 'restore'])->name('category.restore');
     Route::resource('product', ProductController::class);
     Route::post('product/restore/deleted', [ProductController::class, 'restore'])->name('product.restore');
+
+    Route::prefix('site')->name('site.')->controller(SitesController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/edit', 'edit')->name('edit');
+        Route::post('/update', 'update')->name('update');
+    });
 });
 
 require __DIR__ . '/auth.php';
