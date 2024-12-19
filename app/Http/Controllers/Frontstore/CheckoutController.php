@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Frontstore;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Models\Order;
 use App\Models\Product;
+use Illuminate\View\View;
+use App\Models\OrderDetail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class CheckoutController extends Controller
 {
@@ -26,5 +29,46 @@ class CheckoutController extends Controller
             return $product;
         });
         return response()->json($products);
+    }
+
+    public function checkoutStore(Request $request)
+    {
+        $carts = $request->carts;
+        $address = $request->mainAddress;
+
+        DB::beginTransaction();
+
+        try {
+            $order = [
+                'name' => $address['fullname'],
+                'phone' => $address['phone'],
+                'address' => $address['address']
+            ];
+
+
+
+            $orderId = Order::create($order)->id;
+
+            foreach ($carts as $cart) {
+                $price = $cart['price'] - (($cart['price'] * $cart['discount']) / 100);
+
+                $productId = Product::where('name', $cart['product'])->first()->id ?? NULL;
+
+                OrderDetail::create([
+                    'order_id' => $orderId,
+                    'product_id' => $productId,
+                    'product_name' => $cart['product'],
+                    'price' => $cart['price'],
+                    'discount' => $cart['discount'],
+                    'qty' => $cart['qty'],
+                ]);
+            }
+
+            DB::commit();
+            return response()->json('success');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json($th->getMessage());
+        }
     }
 }

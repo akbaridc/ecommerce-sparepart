@@ -30,12 +30,6 @@
                                     x-text="formatRupiah(subTotal - discount)"></span></td>
                         </tr>
                     </table>
-    
-                    <div class="mt-5 text-end">
-                        <x-button.success-button x-on:click="window.location.href = '{{ route('frontstore.checkout') }}'">
-                            {{ __('Checkout') }}
-                        </x-button.success-button>
-                    </div>
                 </div>
 
                 <div class="mt-5">
@@ -51,35 +45,32 @@
                                 <div class="mb-2">
                                     <x-input-label for="fullname" value="{{ __('Full Name') }}" />
                                     <x-text-input id="fullname" name="fullname" type="text" class="mt-1"
-                                        placeholder="{{ __('Full Name') }}" x-model="addressForm.fullname"/>
+                                        placeholder="{{ __('Full Name') }}" x-model="addressForm.fullname" />
                                     {{-- <x-input-error :messages="" class="mt-2" /> --}}
                                 </div>
 
                                 <div class="mb-2">
                                     <x-input-label for="phone" value="{{ __('Phone') }}" />
                                     <x-text-input id="phone" name="phone" type="text" class="mt-1 numeric"
-                                        placeholder="{{ __('Phone') }}" x-model="addressForm.phone"/>
+                                        placeholder="{{ __('Phone') }}" x-model="addressForm.phone" />
                                     {{-- <x-input-error :messages="" class="mt-2" /> --}}
                                 </div>
 
                                 <div class="mb-2">
                                     <x-input-label for="address" value="{{ __('Address') }}" />
-                                    <x-input.textarea id="address" name="address" cols="10"
-                                        rows="2" class="mt-1" placeholder="{{ __('Address') }}" x-model="addressForm.address"></x-input.textarea>
+                                    <x-input.textarea id="address" name="address" cols="10" rows="2"
+                                        class="mt-1" placeholder="{{ __('Address') }}"
+                                        x-model="addressForm.address"></x-input.textarea>
                                     {{-- <x-input-error :messages="" class="mt-2" /> --}}
                                 </div>
 
                                 <div class="mb-2">
                                     <x-input-label for="markas" value="{{ __('Mark as') }}" />
                                     <div class="flex gap-3 mt-2">
-                                        <div class="flex gap-1 cursor-pointer">
-                                            <input type="radio" id="markas1" name="markas" class="radio radio-primary scale-75" value="0" x-model="addressForm.markas" :checked="addressForm.markas == 0 ? true : false"/>
-                                            <x-input-label for="markas1" value="{{ __('Office') }}" />
-                                        </div>
-                                        <div class="flex gap-1 cursor-pointer">
-                                            <input type="radio" id="markas2" name="markas" class="radio radio-primary scale-75" value="1" x-model="addressForm.markas" :checked="addressForm.markas == 1 ? true : false"/>
-                                            <x-input-label for="markas2" value="{{ __('Home') }}" />
-                                        </div>
+                                        <x-input.radio model="addressForm.markas" name="markas" value="0"
+                                            label="{{ __('Office') }}" />
+                                        <x-input.radio model="addressForm.markas" name="markas" value="1"
+                                            label="{{ __('Home') }}" :checked="true" />
                                     </div>
                                     {{-- <x-input-error :messages="" class="mt-2" /> --}}
                                 </div>
@@ -87,35 +78,33 @@
                                 <div class="mb-2">
                                     <x-input-label for="main_address" value="{{ __('Main Address') }}" />
                                     <div class="flex gap-3 mt-2">
-                                        <div class="flex gap-1 cursor-pointer">
-                                            <input type="radio" id="main_address1" name="main_address" class="radio radio-primary scale-75" value="0" x-model="addressForm.main_address" :checked="addressForm.main_address == 0 ? true : false"/>
-                                            <x-input-label for="main_address1" value="{{ __('No') }}" />
-                                        </div>
-                                        <div class="flex gap-1 cursor-pointer">
-                                            <input type="radio" id="main_address2" name="main_address" class="radio radio-primary scale-75" value="1" x-model="addressForm.main_address" :checked="addressForm.main_address == 1 ? true : false"/>
-                                            <x-input-label for="main_address2" value="{{ __('Yes') }}" />
-                                        </div>
+                                        <x-input.radio model="addressForm.main_address" name="main_address"
+                                            value="0" label="{{ __('No') }}" />
+                                        <x-input.radio model="addressForm.main_address" name="main_address"
+                                            value="1" label="{{ __('Yes') }}" :checked="true" />
                                     </div>
                                     {{-- <x-input-error :messages="" class="mt-2" /> --}}
                                 </div>
                                 <div class="mt-2 flex gap-2">
-                                    <button class="btn btn-sm btn-secondary shadow" @click="clearForm()">{{ __('Close') }}</button>
-                                    <button class="btn btn-sm btn-success text-white shadow" @click="onSubmit()">{{ __('Save') }}</button>
+                                    <button class="btn btn-sm btn-secondary shadow"
+                                        @click="clearForm()">{{ __('Close') }}</button>
+                                    <button class="btn btn-sm btn-success text-white shadow"
+                                        @click="onSubmit()">{{ __('Save') }}</button>
                                 </div>
                             </div>
 
                             <div class="mt-3 section-address"></div>
                         </div>
-        
+
                         <div class="mt-5 text-end">
-                            <x-button.success-button x-on:click="window.location.href = '{{ route('frontstore.checkout') }}'">
+                            <x-button.success-button @click="onCheckout()">
                                 {{ __('Checkout') }}
                             </x-button.success-button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
     </div>
@@ -298,55 +287,103 @@
                         main_address: 1
                     },
                     show: false,
-                    displayAddress(){
+                    displayAddress() {
                         const address = getAddress();
 
                         const sectionAddress = document.querySelector(".section-address");
                         sectionAddress.innerHTML = '';
 
-                        if(address.length > 0){
+                        if (address.length > 0) {
                             let html = '';
                             address.forEach(item => {
-                                html += `<div class="border ${item.main_address == 1 ? 'border-cyan-100 bg-cyan-100' : 'border-gray-200 bg-gray-200' } rounded p-3 mb-3 shadow"
+                                html += `<div class="border ${item.main_address == 1 ? 'border-cyan-100 bg-cyan-100' : 'border-gray-50 bg-gray-50' } rounded p-3 mb-3 shadow"
                                             x-data="{
+                                                address: {
+                                                    id: '${item.id}',
+                                                    fullname: '${item.fullname}',
+                                                    phone: '${item.phone}',
+                                                    address: '${item.address}',
+                                                    markas: '${item.markas}',
+                                                    main_address: '${item.main_address}'
+                                                },
+                                                edit: false,
                                                 onDelete(addressId){
                                                     removeAddress(addressId);
                                                     $refs['address-' + addressId].remove();
                                                     showToast('success', 'Address has been removed')
+                                                },
+                                                onUpdated(){
+                                                    updateAddress(this.address);
+                                                    this.edit = false;
+                                                    this.displayAddress();
+                                                    showToast('success', 'Address has been updated')
+                                                },
+                                                onChangeMainAddress(){
+                                                    this.address.main_address = 1;
+                                                    updateAddress(this.address);
+                                                    this.displayAddress();
+                                                    showToast('success', 'Address has been set main address')
                                                 }
                                             }"
                                             x-ref="address-${item.id}">
-                                            <table class="table">
-                                                <tr>
-                                                    <td colspan="3" class="flex justify-end gap-3">
-                                                        <button class="btn btn-xs btn-warning px-4 text-white shadow" >{{ __('Edit') }}</button>
-                                                        <button class="btn btn-xs btn-error px-4 text-white shadow" @click="onDelete('${item.id}')">{{ __('Delete') }}</button>
-                                                    </td>
-                                                </tr>
+                                            <div class="flex mb-3 gap-3">
+                                                <button class="btn btn-xs btn-warning px-4 text-white shadow" @click="edit = !edit" x-text="edit ? 'Cancel' : 'Edit'"></button>
+                                                <button class="btn btn-xs btn-success px-4 text-white shadow" @click="onUpdated()" x-show="edit">{{ __('Update') }}</button>
+                                                <button class="btn btn-xs btn-error px-4 text-white shadow" @click="onDelete('${item.id}')">{{ __('Delete') }}</button>
+                                                <template x-if="address.main_address == 0 && !edit">
+                                                    <button class="btn btn-xs btn-secondary px-4 text-white shadow" @click="onChangeMainAddress()">{{ __('Change it Main Address') }}</button>
+                                                </template>
+                                            </div>
+                                            <table class="table w-full">
                                                 <tr>
                                                     <th class="w-[20%]">Fullname</th>
                                                     <th class="w-[2%]">:</th>
-                                                    <td class="w-[78%]">${item.fullname}</td>
+                                                    <td class="w-[78%]">
+                                                        <span x-show="!edit" x-text="address.fullname"></span>
+                                                        <x-text-input x-show="edit" id="fullname" name="fullname" type="text" placeholder="{{ __('Fullname') }}" x-model="address.fullname" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Phone</th>
                                                     <th>:</th>
-                                                    <td>${item.phone}</td>
+                                                    <td>
+                                                        <span x-show="!edit" x-text="address.phone"></span>
+                                                        <x-text-input x-show="edit" id="phone" name="phone" class="numeric" type="text" placeholder="{{ __('Phone') }}" x-model="address.phone" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Address</th>
                                                     <th>:</th>
-                                                    <td>${item.address}</td>
+                                                    <td>
+                                                        <span x-show="!edit" x-text="address.address"></span>
+                                                        <x-text-input x-show="edit" id="address" name="address" type="text" placeholder="{{ __('Address') }}" x-model="address.address" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Mark as</th>
                                                     <th>:</th>
-                                                    <td>${item.markas == 0 ? 'Office' : 'Home'}</td>
+                                                    <td>
+                                                        <span x-show="!edit" x-text="address.markas == 0 ? 'Office' : 'Home'"></span>
+                                                        <div class="flex gap-3 mt-2" x-show="edit">
+                                                            <x-input.radio name="markas"
+                                                                value="0" label="{{ __('Office') }}" model="address.markas" checked="address.markas == 0 ? true : false" counter="${item.id}"/>
+                                                            <x-input.radio  name="markas"
+                                                                value="1" label="{{ __('Home') }}" model="address.markas" checked="address.markas == 0 ? true : false" counter="${item.id}"/>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>Main Address</th>
                                                     <th>:</th>
-                                                    <td>${item.main_address == 0 ? 'No' : 'Yes'}</td>
+                                                    <td>
+                                                        <span x-show="!edit" x-text="address.main_address == 0 ? 'No' : 'Yes'"></span>
+                                                        <div class="flex gap-3 mt-2" x-show="edit">
+                                                            <x-input.radio model="address.main_address" name="main_address"
+                                                                value="0" label="{{ __('No') }}" checked="address.main_address == 0 ? true : false" counter="${item.id}"/>
+                                                            <x-input.radio model="address.main_address" name="main_address"
+                                                                value="1" label="{{ __('Yes') }}" checked="address.main_address == 1 ? true : false" counter="${item.id}"/>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             </table>
                                          </div>`
@@ -357,7 +394,7 @@
                             sectionAddress.innerHTML = sectionEmptyData('Address is empty');
                         }
                     },
-                    clearForm(){
+                    clearForm() {
                         this.addressForm = {
                             id: getAddress().length + 1,
                             fullname: '',
@@ -368,17 +405,60 @@
                         }
                         this.show = false
                     },
-                    onSubmit(){
+                    onSubmit() {
                         addToAddress(this.addressForm);
                         this.clearForm();
                         this.displayAddress();
                         showToast('success', 'Address has been added')
                     },
-                    init(){
+                    init() {
                         this.displayAddress();
                     }
                 }))
             })
+
+            const onCheckout = () => {
+                const carts = getCarts();
+                const address = getAddress();
+
+                if (carts.length == 0) return showToast('error', 'Your cart is empty, please add product first');
+                if (address.length == 0) return showToast('error', 'Your address is empty, please add address first');
+
+                const mainAddress = address.find(item => item.main_address == 1);
+
+                if (!mainAddress) return showToast('error', 'Your main address is empty, please add main address first');
+
+                let message = "";
+                message += 'Order Product\n\n';
+
+                let total = 0;
+                carts.forEach((item, index) => {
+                    const price = item.price - ((item.price * item.discount) / 100);
+                    total += price * item.qty;
+                    message += `${index + 1}. ${item.product} ${item.qty} x ${formatRupiah(price)}\n`;
+                })
+
+                message += '------------------------------------------\n'
+                message += `Total: Rp. ${formatRupiah(total)}\n\n`;
+
+                message += 'Address\n\n';
+
+                message += `*Name*: ${mainAddress.fullname}\n`;
+                // message += `*Phone*: ${mainAddress.phone}\n`;
+                message += `*Address*: ${mainAddress.address}\n`;
+
+                window.open(`https://wa.me/+6283111693720?text=${encodeURI(message)}`, 'blank');
+
+                requestAjax('{{ route('frontstore.checkout.store') }}', {
+                    carts,
+                    mainAddress
+                }, 'POST', function(response) {});
+
+                removeProductCart();
+                showToast('success', 'Order has been sent');
+                setTimeout(() => window.location.href = '{{ route('frontstore.homepage') }}', 2000);
+
+            }
         </script>
     @endpush
 </x-app-front-layout>

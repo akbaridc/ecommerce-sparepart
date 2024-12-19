@@ -132,30 +132,42 @@
     const addToAddress = (params) => {
         let address = getAddress();
 
-        if(address.main_address == 1) {
-            address.map(item => ({ ...item, main_address: 0 }));
+        if (params.main_address == 1) {
+            address = address.map(item => ({
+                ...item,
+                main_address: 0
+            }));
         }
+
         address.push(params);
 
         localStorage.setItem('address', JSON.stringify(address));
     };
 
-    const updateAddress = (id, params) => {
+    const updateAddress = (params) => {
 
         let address = getAddress();
 
-        const addressIndex = address.findIndex(item => item.id == id);
+        const addressIndex = address.findIndex(item => item.id == params.id);
 
         if (addressIndex !== -1) {
+
+            if (params.main_address == 1) {
+                address = address.map(item => {
+                    if (item.id != params.id) item.main_address = 0;
+                    return item;
+                });
+            }
+
             address[addressIndex] = {
-                id: id,
+                id: params.id,
                 fullname: params.fullname,
                 phone: params.phone,
                 address: params.address,
                 markas: params.markas,
                 main_address: params.main_address
             }
-        } 
+        }
 
         localStorage.setItem('address', JSON.stringify(address));
     }

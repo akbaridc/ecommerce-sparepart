@@ -27,6 +27,7 @@ Route::name('frontstore.')->controller(HomepageController::class)->group(functio
         Route::post('/cart/show', 'cartShow')->name('cart.show');
 
         Route::get('/checkout', 'checkout')->name('checkout');
+        Route::post('/checkout/store', 'checkoutStore')->name('checkout.store');
     });
 });
 
