@@ -9,7 +9,7 @@ use App\Http\Controllers\SitesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontstore\HomepageController;
 use App\Http\Controllers\Frontstore\CheckoutController;
-
+use App\Http\Controllers\TransactionController;
 
 Route::name('frontstore.')->controller(HomepageController::class)->group(function () {
     Route::controller(HomepageController::class)->group(function () {
@@ -59,6 +59,12 @@ Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(func
         Route::get('/', 'index')->name('index');
         Route::get('/edit', 'edit')->name('edit');
         Route::post('/update', 'update')->name('update');
+    });
+
+    Route::prefix('transaction')->name('transaction.')->controller(TransactionController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{order}/edit', 'edit')->name('edit');
+        Route::get('/update', 'update')->name('update');
     });
 });
 

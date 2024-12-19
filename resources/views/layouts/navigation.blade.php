@@ -33,6 +33,13 @@
                         {{ __('Product') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('backoffice.transaction.index')" :active="in_array(request()->route()->getName(), [
+                        'backoffice.transaction.index',
+                        'backoffice.transaction.edit',
+                    ])">
+                        {{ __('Transaction') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('backoffice.site.index')" :active="in_array(request()->route()->getName(), ['backoffice.site.index'])">
                         {{ __('Setting') }}
                     </x-nav-link>
@@ -98,6 +105,44 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('backoffice.banner.index')" :active="request()->routeIs('backoffice.banner.index')">
+                {{ __('Banner') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('backoffice.category.index')" :active="request()->routeIs('backoffice.category.index')">
+                {{ __('Category') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('backoffice.product.index')" :active="in_array(request()->route()->getName(), [
+                'backoffice.product.index',
+                'backoffice.product.show',
+                'backoffice.product.create',
+                'backoffice.product.edit',
+            ])">
+                {{ __('Product') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('backoffice.transaction.index')" :active="in_array(request()->route()->getName(), [
+                'backoffice.transaction.index',
+                'backoffice.transaction.edit',
+            ])">
+                {{ __('Transaction') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('backoffice.site.index')" :active="in_array(request()->route()->getName(), ['backoffice.site.index'])">
+                {{ __('Setting') }}
             </x-responsive-nav-link>
         </div>
 

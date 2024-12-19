@@ -63,6 +63,8 @@ class CheckoutController extends Controller
                     'discount' => $cart['discount'],
                     'qty' => $cart['qty'],
                 ]);
+
+                Product::where('id', $productId)->decrement('stock', $cart['qty']);
             }
 
             DB::commit();
