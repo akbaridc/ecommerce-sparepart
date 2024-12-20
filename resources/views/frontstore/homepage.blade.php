@@ -33,13 +33,13 @@
                     </div>
 
                     <!-- Navigation Arrows -->
-                    <button
+                    <button x-show="totalSlides > 1"
                         class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
                         @click="currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalSlides - 1">
                         &#10094; <!-- Left Arrow -->
                     </button>
 
-                    <button
+                    <button x-show="totalSlides > 1"
                         class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75"
                         @click="currentIndex = (currentIndex + 1) % totalSlides">
                         &#10095; <!-- Right Arrow -->

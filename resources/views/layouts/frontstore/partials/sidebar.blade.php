@@ -11,8 +11,8 @@
         <div class="divider"></div>
     </div>
     <!-- Navigation Menu -->
-    <nav class="flex-1 overflow-y-auto h-full pb-14">
-        <ul class="space-y-3">
+    <nav class="flex-1 overflow-y-auto h-full pb-24">
+        <ul class="space-y-2">
             @forelse ($categories as $category)
                 <li>
                     <a href="{{ route('frontstore.category', $category->slug) }}"

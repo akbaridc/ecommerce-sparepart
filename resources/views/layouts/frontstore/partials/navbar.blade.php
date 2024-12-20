@@ -41,9 +41,53 @@
         </div> --}}
         <div class="flex justify-end gap-4 items-center">
 
-            <x-button.success-button
-                class="hidden md:inline-block bg-primary-500 brightness-125 hover:bg-primary-500 hover:brightness-125 border-transparent focus:ring-offset-0 focus:ring-transparent focus:ring-0 active:bg-transparent w-52 align-middle">
-                {{ __('Aktifkan Lokasi') }}
+            <x-button.success-button x-data="{
+                location: localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location')) : null,
+                getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const latitude = position.coords.latitude;
+                                const longitude = position.coords.longitude;
+
+                                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.address) {
+                                            this.location = `${data.address.city} - ${data.address.city_district}`;
+                                            localStorage.setItem('location', JSON.stringify(this.location));
+                                        } else {
+                                            showToast('error', 'Gagal mendapatkan informasi lokasi')
+                                        }
+                                    })
+                                    .catch(error => {
+                                        showToast('error', 'Terjadi kesalahan saat mengakses lokasi ' + error)
+                                    });
+                            },
+                            (error) => {
+                                switch (error.code) {
+                                    case error.PERMISSION_DENIED:
+                                        showToast('error', 'Pengguna menolak permintaan lokasi')
+                                        break;
+                                    case error.POSITION_UNAVAILABLE:
+                                        showToast('error', 'Informasi lokasi tidak tersedia')
+                                        break;
+                                    case error.TIMEOUT:
+                                        showToast('error', 'Permintaan lokasi melebihi batas waktu')
+                                        break;
+                                    default:
+                                        showToast('error', 'Terjadi kesalahan saat mengambil lokasi')
+                                        break;
+                                }
+                            }
+                        )
+                    } else {
+                        showToast('error', 'Geolocation tidak didukung oleh browser Anda')
+                    }
+                }
+            }"
+                class="hidden md:inline-block bg-primary-500 brightness-125 hover:bg-primary-500 hover:brightness-125 border-transparent focus:ring-offset-0 focus:ring-transparent focus:ring-0 active:bg-transparent w-52 align-middle"
+                x-text="location ?? 'Aktifkan Lokasi'" x-on:click="getLocation()">
             </x-button.success-button>
 
             {{-- Shopping Cart --}}
