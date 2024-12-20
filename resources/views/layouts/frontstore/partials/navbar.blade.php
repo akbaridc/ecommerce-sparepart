@@ -42,7 +42,7 @@
         <div class="flex justify-end gap-4 items-center">
 
             <x-button.success-button x-data="{
-                location: localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location')) : null,
+                location: localStorage.getItem('location') ? `${JSON.parse(localStorage.getItem('location')).city} - ${JSON.parse(localStorage.getItem('location')).city_district}` : null,
                 getLocation() {
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(
@@ -55,7 +55,7 @@
                                     .then(data => {
                                         if (data.address) {
                                             this.location = `${data.address.city} - ${data.address.city_district}`;
-                                            localStorage.setItem('location', JSON.stringify(this.location));
+                                            localStorage.setItem('location', JSON.stringify(data.address));
                                         } else {
                                             showToast('error', 'Gagal mendapatkan informasi lokasi')
                                         }
