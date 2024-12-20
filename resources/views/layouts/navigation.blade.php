@@ -134,7 +134,7 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('backoffice.transaction.index')" :active="in_array(request()->route()->getName(), [
                 'backoffice.transaction.index',
-                'backoffice.transaction.edit',
+                'backoffice.transaction.show',
             ])">
                 {{ __('Transaction') }}
             </x-responsive-nav-link>

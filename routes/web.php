@@ -63,8 +63,7 @@ Route::middleware('auth')->prefix('backoffice')->name('backoffice.')->group(func
 
     Route::prefix('transaction')->name('transaction.')->controller(TransactionController::class)->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/{order}/edit', 'edit')->name('edit');
-        Route::get('/update', 'update')->name('update');
+        Route::get('/{order}/show', 'show')->name('show');
     });
 });
 

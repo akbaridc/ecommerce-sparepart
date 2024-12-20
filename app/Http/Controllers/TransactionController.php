@@ -17,7 +17,7 @@ class TransactionController extends Controller
         return view('backoffice.transaction.index', compact('transactions'));
     }
 
-    public function edit(Order $order)
+    public function show(Order $order)
     {
         $order->load(['order_detail', 'order_detail.product']);
         return view('backoffice.transaction.form', compact('order'));

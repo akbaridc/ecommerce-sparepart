@@ -3,11 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="card bg-white p-5">
                 <div class="card-title justify-between">
-                    <h3 class="text-slate-900">Transaction</h3>
-                    <div class="flex gap-2">
-                        {{-- <x-button.success-button x-data=""
-                            x-on:click="window.location.href = '{{ route('backoffice.product.create') }}'">{{ __('Add New') }}</x-button.success-button> --}}
-                    </div>
+                    <h3 class="text-slate-900">History Transaction</h3>
                 </div>
                 <div class="card-body">
                     <div class="overflow-x-auto">
@@ -45,10 +41,10 @@
                                         <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
                                         <td>
                                             <div class="flex gap-2 justify-center">
-                                                <x-button.warning-button x-data=""
-                                                    x-on:click="window.location.href = '{{ route('backoffice.transaction.edit', $transaction->id) }}'">
-                                                    {{ __('Edit') }}
-                                                </x-button.warning-button>
+                                                <x-button.info-button x-data=""
+                                                    x-on:click="window.location.href = '{{ route('backoffice.transaction.show', $transaction->id) }}'">
+                                                    {{ __('Detail') }}
+                                                </x-button.info-button>
                                             </div>
                                         </td>
                                     </tr>
