@@ -86,7 +86,7 @@
         localStorage.setItem('carts', JSON.stringify(carts));
     };
 
-    const updateCart = (id, separator = '+', qty, element = null) => {
+    const updateCart = (id, separator = '+', qty, productName = null, productPrice = null, productDiscount = null) => {
 
         let carts = getCarts();
 
@@ -98,15 +98,13 @@
             if (separator === 'input') carts[productIndex].qty = parseInt(qty);
             if (separator === 'button') carts[productIndex].qty += parseInt(qty);
         } else {
-            if (element) {
-                carts.push({
-                    product_id: id,
-                    product: element.name,
-                    price: parseInt(element.price),
-                    discount: parseInt(element.discount),
-                    qty: parseInt(qty)
-                })
-            }
+            carts.push({
+                product_id: id,
+                product: productName,
+                price: parseInt(productPrice),
+                discount: parseInt(productDiscount),
+                qty: parseInt(qty)
+            })
 
         }
 

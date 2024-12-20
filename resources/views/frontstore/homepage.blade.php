@@ -1,7 +1,7 @@
 <x-app-front-layout>
     <div class="mx-auto max-w-full px-3">
         <div class="py-2 rounded-md">
-            @if (count($banners) > 0)
+            @if (count($banners) > 0 && !request()->query('search'))
                 <div x-data="{
                     currentIndex: 0,
                     totalSlides: {{ count($banners) }},

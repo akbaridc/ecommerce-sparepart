@@ -60,9 +60,9 @@
 
                             </div>
 
-                            {{-- <p class="text-sm text-gray-500">
+                            <p class="text-sm text-gray-500">
                                 {{ \Illuminate\Support\Str::limit($product->short_description, 50) }}
-                            </p> --}}
+                            </p>
 
                             <div class="mt-3 flex justify-between items-center">
                                 <small class="text-gray-500">Stock {{ formatRupiah($product->stock) }} pcs</small>

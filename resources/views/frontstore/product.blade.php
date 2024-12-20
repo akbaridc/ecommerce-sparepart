@@ -50,10 +50,12 @@
                     </div>
                     <div class="flex gap-3 my-5">
                         <x-button.info-button class="py-3"
-                            @click="updateCart('{{ $product->id }}', 'button', quantity, '{{ $product }}');setLabelCarts();showToast('success', 'Product added to cart')">
+                            @click="updateCart('{{ $product->id }}', 'button', quantity, '{{ $product->name }}','{{ $product->price }}','{{ $product->discount }}');setLabelCarts();showToast('success', 'Product added to cart')">
                             <i class="fa fa-shopping-cart me-2"></i>
                             {{ __('Add to Cart') }}</x-button.info-button>
-                        <x-button.success-button class="py-3"> <i class="fa-solid fa-dollar-sign me-2"></i>
+                        <x-button.success-button class="py-3"
+                            @click="updateCart('{{ $product->id }}', 'button', quantity, '{{ $product->name }}','{{ $product->price }}','{{ $product->discount }}');setLabelCarts();window.location.href = '{{ route('frontstore.cart') }}'">
+                            <i class="fa-solid fa-dollar-sign me-2"></i>
                             {{ __('Buy Now') }}</x-button.success-button>
                     </div>
                     <article class="mt-4">
