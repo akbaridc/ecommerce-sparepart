@@ -26,7 +26,7 @@ Welcome to application ecommerce sparepart
 
    npm run install
 
-   *Note pastikan komputer anda mempunya composer dan node, jika belum bisa diinstal terlebih dahulu
+   *Note pastikan komputer anda mempunyai composer dan node js, jika belum bisa diinstal terlebih dahulu
    [composer](https://getcomposer.org/download/)
    [node js](https://nodejs.org/en/download) 
 
@@ -39,7 +39,7 @@ Welcome to application ecommerce sparepart
    ```
 
 ## usage
-Start the API server:
+Start:
 ```bash
 buka 2 terminal dan jalankan
 1. php artisan serve
